@@ -8,7 +8,7 @@ import random#For hangman and blackjack
 
 root = tk.Tk()
 
-root.geometry("1000x900")#The size of the window
+root.geometry("950x850")#The size of the window
 
 root.resizable(False, False)  # stop the resizing of the window
 
@@ -65,26 +65,33 @@ def hangman():
     hangman.resizable(False, False)  # stop the resizing of the window
     hangman.configure(bg="#FAF0CA")#The background color of the window
 
-    head = tk.Label(hangman, text = "Guess the word, \nor the man gets hanged", font=scary_font_label, fg = "#CC0000", bg = "#FAF0CA")#heading
+    head = tk.Label(hangman, text = "Guess the word, \nor the man gets hanged", 
+                    font=scary_font_label, fg = "#CC0000", 
+                    bg = "#FAF0CA")#heading
 
     head.pack(pady = 5 )
 
 
     difficulty = random.choice(list(words))#Choosing a random difficulty first
     word = random.choice(words[difficulty])#Then choosing a random word
-    guessed = ["_ "] * len(word)#Number of lines = number of letters in word for user to guess, each line will be replaced when user guesses correctly
+    guessed = ["_ "] * len(word)
+    #Number of lines = number of letters in word for user to guess, 
+    #each line will be replaced when user guesses correctly
 
 
 
 
 
 
-    enter = tk.Entry(hangman, font = pixel_font_buttons, bg = "#FAF0CA")#A textbox where the user can enter their guesses(single line)
+    enter = tk.Entry(hangman, font = pixel_font_buttons, bg = "#FAF0CA")
+    #A textbox where the user can enter their guesses(single line)
     enter.pack(pady = 10)
  
 
 
-    label = tk.Label(hangman, text = "_ " * len(word), font = pixel_font_labels, bg = "#FAF0CA")#the lines to show how many letters are in the word
+    label = tk.Label(hangman, text = "_ " * len(word), 
+                     font = pixel_font_labels, bg = "#FAF0CA")
+    #the lines to show how many letters are in the word
     label.pack(pady = 5)
 
 
@@ -192,9 +199,6 @@ def hangman():
                               fg = "#FAF0CA", bg = "#0D3B66")
             seeLB.pack(pady = 5)
 
-        
-
-
 
     def nextword(event = None):
 
@@ -251,45 +255,91 @@ def hangman():
         scoreboard_window.configure(bg="#FAF0CA")
         #The background color of the window
 
-        name_label = tk.Label(scoreboard_window, text = "Please enter your name", 
+        name_label = tk.Label(scoreboard_window, 
+                              text = "Please enter a new name", 
                               fg = "#0D3B66",
                                bg = "#FAF0CA", font = pixel_font_labels)
         name_label.pack()
         nameEnter = tk.Entry(scoreboard_window,  bg = "#FAF0CA", 
                         font = pixel_font_labels)
         nameEnter.pack()
+        name_warning = tk.Label(scoreboard_window, 
+                                text = "Please enter a name under 7 letters", 
+                                fg = "#0D3B66",
+                               bg = "#FAF0CA", 
+                               font = pixel_font_buttons_hangman)
+        name_warning.pack(pady = 5)
 
         def get_name():
-            confirmNamewin = tk.Toplevel(hangman)
-            confirmNamewin.title("Hangman scores")
-            confirmNamewin.geometry("500x800")
-            confirmNamewin.resizable(False, False)  
-            # stop the resizing of the window
+            #I used a tutorial by Tutorialspoint for the scroll bar
             value = nameEnter.get()
-            confirmNamewin.configure(bg="#FAF0CA")
-            scoreboard_window.destroy()
-            scores[value] = score
-            #save the scores to a dictionary with a name and score
-            title_score_UN = tk.Label(confirmNamewin, text = "Name",
-            font = pixel_font_buttons_hangman, 
-                                     fg = "#0D3B66")
-            #spot where name is
-            title_score_S = tk.Label(confirmNamewin, text = "Score", 
-                                     font = pixel_font_buttons_hangman, 
-                                     fg = "#0D3B66")
-            #spot where score is
-            title_score_UN.pack(padx = 20, pady = 5, anchor = "nw", 
-                                side = "right")
-            #The name is forced into the north west.
-            #The side is to make sure the name and score are on the same row
-            title_score_S.pack(padx = 20, pady = 5, anchor = "ne", 
-                               side = "left")
-            for i, r in scores.items():
-                #putting the score and name in dict into labels so the player
-                #can see them 
-                scorey = tk.Label(confirmNamewin, text = f"{i}{r}")
-                scorey.pack()
-            
+            if len(value) <= 6:
+                confirmNamewin = tk.Toplevel(hangman)
+                confirmNamewin.title("Hangman scores")
+                confirmNamewin.geometry("400x800")
+                confirmNamewin.resizable(False, False)  
+                confirmNamewin.grid()
+
+                scrollframe = tk.Frame(confirmNamewin, bg = "#FAF0CA")
+                scrollframe.grid(row = 0, column = 0, sticky="nsew")
+
+                canvasScroll = tk.Canvas(scrollframe, bg = "#FAF0CA")
+                #yview makes the scroll bar control canvas vertical scroll
+                scrollbar = tk.Scrollbar(scrollframe
+                                         , orient="vertical", 
+                                         command=canvasScroll.yview)
+                scrollbar.grid(row = 0, column = 1, sticky = "ns")
+                canvasScroll.configure(yscrollcommand = scrollbar.set)
+
+                content = tk.Frame(canvasScroll, bg = "#FAF0CA")
+                content.grid(row = 0, column = 0, sticky = "nsew")
+                content.rowconfigure(0, weight = 1)
+                content.columnconfigure(0, weight = 1)
+
+                #Allow for other widgets to be in the canvas
+                canvasScroll.create_window((0, 0), window = content, 
+                                           anchor = "nw")
+                canvasScroll.grid(row = 0, column = 0, sticky = "nsew")
+                #make scroll bar expand to fit to window
+                scrollframe.bind("<Configure>", lambda e: 
+                                   canvasScroll.configure(scrollregion=canvasScroll.bbox("all")))
+
+
+                # stop the resizing of the window
+                confirmNamewin.configure(bg="#FAF0CA")
+                scoreboard_window.destroy()
+                scores[value] = score
+                #save the scores to a dictionary with a name and score
+                title_score_UN = tk.Label(content, text = "Name",
+                font = pixel_font_labels, 
+                                        fg = "#0D3B66", bg = "#FAF0CA")
+                #spot where name is
+                title_score_S = tk.Label(content, text = "Score", 
+                                        font = pixel_font_labels, 
+                                        fg = "#0D3B66", bg = "#FAF0CA")
+                title_score_UN.grid(row = 0, column = 0, padx = 40, pady = 5)
+                title_score_S.grid(row = 0, column = 1, padx = 40, pady = 5)
+                #putting them in a grid so they can stack like a leaderboard
+                line = 1
+                #The row the name and score are on
+                for i, r in scores.items():
+                    #putting the score and name in dict into labels so the player
+                    #can see them 
+                    scorey = tk.Label(content, text = r, bg = "#FAF0CA", 
+                                    fg = "#0D3B66", font = pixel_font_labels)
+                    namey = tk.Label(content, text = i, bg = "#FAF0CA", 
+                                    fg = "#0D3B66", font = pixel_font_labels)
+                    scorey.grid(row = line, column = 1, padx = 40, pady = 5)
+                    namey.grid(row = line, column = 0, padx = 40, pady = 5)
+                    line += 1
+
+                    #make it enlarge into the window
+                    confirmNamewin.columnconfigure(0, weight=1)
+                    confirmNamewin.rowconfigure(0, weight=1)
+                    scrollframe.columnconfigure(0, weight=1)
+                    scrollframe.rowconfigure(0, weight=1)
+            else:
+                name_warning.config(fg = "#FF0000")
 
 
         confirmName = tk.Button(scoreboard_window, text = "Confirm name", 
@@ -434,6 +484,9 @@ def Stictactoe():
                 board[mainrow][maincol][subrow][subcol] = current_player
                 #Turning all the subboards blue except those that are won
                 #or the one that we are moving in
+                check_winner_sub(mainrow, maincol)
+                #check if the subboard fo these coords wins
+                check_winner_main()#Check if main board wins
                 for i in range(3):
                     for r in range(3):
                         if subboard_winner[i][r] == "":
@@ -456,12 +509,10 @@ def Stictactoe():
                                 
                 #Then change the button the whatever the current player is
                 if current_player == "O":#Changing the color of the square
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "blue")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#0000FF")
                 else:
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "red")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#FF0000")
                 #changing the text of the button to the current player
-                check_winner_sub(mainrow, maincol)#check if subboard wins using the coordinates
-                check_winner_main()#Check if main board wins
                 if current_player == "X":#Changing the current player after each turn
                     current_player = "O"
                 else:
@@ -470,7 +521,9 @@ def Stictactoe():
 
                     #First check if the button is empty
                     #Then check if the button is in the allowed frame
-            elif board[mainrow][maincol][subrow][subcol] == "" and allowed_frame_coords_x == mainrow and allowed_frame_coords_y == maincol:
+            elif board[mainrow][maincol][subrow][subcol] == "" and \
+                allowed_frame_coords_x == mainrow and\
+                      allowed_frame_coords_y == maincol:
                 #Turning all the subboards blue except those that are won
                 #or the one that we are moving in
                 for i in range(3):
@@ -484,7 +537,10 @@ def Stictactoe():
                     #Change color of target
 
                 board[mainrow][maincol][subrow][subcol] = current_player
-                #Check if the next subboard is won
+                #Check if the next subboard is 
+                check_winner_sub(mainrow, maincol)
+                #check if the subboard fo these coords wins
+                check_winner_main()#Check if main board wins
                 if subboard_winner[subrow][subcol] == "":
                     #If it isn't then change the allowed coords to the next subboard
                     allowed_frame_coords_x = subrow
@@ -500,13 +556,10 @@ def Stictactoe():
                                 subboards[i][r].config(bg = "#0D3B66")
                 #Then change the button the whatever the current player is
                 if current_player == "O":#Changing the color of the square
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "blue")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#0000FF")
                 else:
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "red")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#FF0000")
                 #changing the text of the button to the current player
-                check_winner_sub(mainrow, maincol)
-                #check if the subboard fo these coords wins
-                check_winner_main()#Check if main board wins
                 if current_player == "X":#Changing the current player after each turn
                     current_player = "O"
                 else:
@@ -529,6 +582,10 @@ def Stictactoe():
             for win in winning:
                 if win[0] == win[1] == win[2] != "":#If all three values in a row are the same and not empty
                     FTTT_title.config(text = f"{win[0]} wins!")
+                    if win[0] == "O":
+                        FTTT.config(bg = "#0000FF")
+                    else:
+                        FTTT.config(bg = "#FF0000")
                     for i in range(3):
                         for r in range(3):
                             for j in buttons[i][r]:#Iterating through the list
@@ -565,9 +622,9 @@ def Stictactoe():
                     #take note of who won the subboard in the nested list
                     subboard_winner[mainrow][maincol] = current_player
                     if subboard_winner[mainrow][maincol] == "X":
-                        subboards[mainrow][maincol].config(bg = "red")
+                        subboards[mainrow][maincol].config(bg = "#FF0000")
                     else:#Changing the colors to match the winners
-                        subboards[mainrow][maincol].config(bg = "blue")
+                        subboards[mainrow][maincol].config(bg = "#0000FF")
                     #Taking note of who won
                     for i in buttons[mainrow][maincol]:#Iterating through the list
                         #Or 3rd list inside the buttons(row list)nested list
@@ -721,7 +778,7 @@ def Stictactoe():
             [fm_subrow][fm_subcol] = "O"
         buttons[fm_mainrow][fm_maincol]\
             [fm_subrow][fm_subcol].config(text="O", 
-                                                          bg = "blue")
+                                          bg = "#0000FF")
         allowed_frame_coords_x = fm_subrow
         allowed_frame_coords_y = fm_subcol
         subboards[allowed_frame_coords_x][allowed_frame_coords_y].config(bg = "#0D3B66")
@@ -737,7 +794,8 @@ def Stictactoe():
             nonlocal subboard_winner
             #The the mainrow maincol determines which frame the button picked is
             #The subrow subcol determines which button inside the frame was clicked
-            if allowed_frame_coords_x == "" and allowed_frame_coords_y == "" and board[mainrow][maincol][subrow][subcol] == "":
+            if allowed_frame_coords_x == "" and allowed_frame_coords_y == "" \
+                and board[mainrow][maincol][subrow][subcol] == "":
                 board[mainrow][maincol][subrow][subcol] = current_player
                 #Turning all the subboards blue except those that are won
                 #or the one that we are moving in
@@ -745,6 +803,9 @@ def Stictactoe():
                     for r in range(3):
                         if subboard_winner[i][r] == "":
                             subboards[i][r].config(bg = "#EE964B")
+                check_winner_sub(mainrow, maincol)
+                #check if subboard wins using the coordinates
+                check_winner_main()#Check if main board wins
                 if subboard_winner[subrow][subcol] == "":
                     allowed_frame_coords_x = subrow
                     allowed_frame_coords_y = subcol
@@ -760,13 +821,11 @@ def Stictactoe():
                         for r in range(3):
                             if subboard_winner[i][r] == "":
                                 subboards[i][r].config(bg = "#0D3B66")
-                check_winner_sub(mainrow, maincol)#check if subboard wins using the coordinates
-                check_winner_main()#Check if main board wins
                 #Then change the button the whatever the current player is
                 if current_player == "O":#Changing the color of the square
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "blue")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#0000FF")
                 else:
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "red")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#FF0000")
                 #changing the text of the button to the current player
                 if current_player == "X":#Changing the current player after each turn
                     current_player = "O"
@@ -795,9 +854,11 @@ def Stictactoe():
                 if subboard_winner[subrow][subcol] == "":
                     #If the target board was not won then...
                         subboards[subrow][subcol].config(bg = "#0D3B66")
-
                     #Change color of target
 
+                check_winner_sub(mainrow, maincol)
+                #check if the subboard fo these coords wins
+                check_winner_main()#Check if main board wins
                 board[mainrow][maincol][subrow][subcol] = current_player
                 #Check if the next subboard is won
                 if subboard_winner[subrow][subcol] == "":
@@ -811,13 +872,10 @@ def Stictactoe():
 
                 #Then change the button the whatever the current player is
                 if current_player == "O":#Changing the color of the square
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "blue")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#0000FF")
                 else:
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "red")
+                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#FF0000")
                 #changing the text of the button to the current player
-                check_winner_sub(mainrow, maincol)
-                #check if the subboard fo these coords wins
-                check_winner_main()#Check if main board wins
                 if current_player == "X":#Changing the current player after each turn
                     current_player = "O"
                     if game_finished == False:
@@ -853,13 +911,14 @@ def Stictactoe():
                     #Changing the color of the square depedning on the player
                     buttons[allowed_frame_coords_x][allowed_frame_coords_y]\
                         [bot_coord_X][bot_coord_Y].config(text=current_player, 
-                                                          bg = "blue")
+                                                          bg = "#0000FF")
+                    check_winner_sub(allowed_frame_coords_x, 
+                                     allowed_frame_coords_y)
+                    check_winner_main()
                     for i in range(3):
                         for r in range(3):
                             if subboard_winner[i][r] == "":
                                 subboards[i][r].config(bg = "#EE964B")
-                    check_winner_sub(allowed_frame_coords_x, allowed_frame_coords_y)
-                    check_winner_main()
                     current_player = "X"
 
                     if subboard_winner[bot_coord_X][bot_coord_Y] == "":
@@ -883,28 +942,38 @@ def Stictactoe():
                 bot_coord_Y = random.randint(0,2)
                 #First choose a random frame and random button
                 #Then check random frames until we find one that isn't won
-                while subboard_winner[allowed_frame_coords_x][allowed_frame_coords_y] != "":
+                while True:
                     allowed_frame_coords_x = random.randint(0,2)
                     allowed_frame_coords_y = random.randint(0,2)
                     #If the frame isn't won then break the loop
-                    if subboard_winner[allowed_frame_coords_x][allowed_frame_coords_y] == "":
+                    if subboard_winner[allowed_frame_coords_x]\
+                        [allowed_frame_coords_y] == "":
                         break
                     #And choose a random button in that frame
                     #Then check random buttons until we find an empty one
-                while board[allowed_frame_coords_x][allowed_frame_coords_y][bot_coord_X][bot_coord_Y] != "":
+                while True:
                     bot_coord_X = random.randint(0,2)
                     bot_coord_Y = random.randint(0,2)
                     #If the button is empty then break the loop
-                    if board[allowed_frame_coords_x][allowed_frame_coords_y][bot_coord_X][bot_coord_Y] == "":
+                    if board[allowed_frame_coords_x][allowed_frame_coords_y]\
+                        [bot_coord_X][bot_coord_Y] == "":
                         break
                 #Then make the bot make a move in the button
                 
                 #Make a move in the selected button
-                board[allowed_frame_coords_x][allowed_frame_coords_y][bot_coord_X][bot_coord_Y] = current_player
-                buttons[allowed_frame_coords_x][allowed_frame_coords_y][bot_coord_X][bot_coord_Y].config(text=current_player, bg = "blue")
+                board[allowed_frame_coords_x][allowed_frame_coords_y]\
+                    [bot_coord_X][bot_coord_Y] = current_player
+                buttons[allowed_frame_coords_x][allowed_frame_coords_y]\
+                    [bot_coord_X][bot_coord_Y].config(text=current_player, 
+                                                      bg = "#0000FF")
                 check_winner_sub(allowed_frame_coords_x, allowed_frame_coords_y)
                 check_winner_main() 
+                for i in range(3):
+                    for r in range(3):
+                        if subboard_winner[i][r] == "":
+                            subboards[i][r].config(bg = "#EE964B")
                 current_player = "X"
+
                 if subboard_winner[bot_coord_X][bot_coord_Y] == "":
                     #If it isn't then change the allowed coords to the next subboard
                     allowed_frame_coords_x = bot_coord_X
@@ -940,6 +1009,10 @@ def Stictactoe():
                 if win[0] == win[1] == win[2] != "":#If all three values in a row are the same and not emptyF
                     game_finished = True
                     STTT_title.config(text = f"{win[0]} wins!")
+                    if win[0] == "O":
+                        BTTT.config(bg = "#0000FF")
+                    else:
+                        BTTT.config(bg = "#FF0000")
                     for i in range(3):
                         for r in range(3):
                             for j in buttons[i][r]:#Iterating through the list
@@ -981,18 +1054,21 @@ def Stictactoe():
                     subboard_winner[mainrow][maincol] = win[0]
                     #The winner is the first value out of the winning line
                     if subboard_winner[mainrow][maincol] == "X":
-                        subboards[mainrow][maincol].config(bg = "red")
+                        subboards[mainrow][maincol].config(bg = "#FF0000")
                     else:#Changing the colors to match the winners
-                        subboards[mainrow][maincol].config(bg = "blue")
+                        subboards[mainrow][maincol].config(bg = "#0000FF")
                     #Taking note of who won
-                    for i in buttons[mainrow][maincol]:#Iterating through the list
+                    for i in buttons[mainrow][maincol]:
+                        #Iterating through the list
                         #Or 3rd list inside the buttons(row list)nested list
-                        for r in i:#Inside the list I iterate through each button
+                        for r in i:
+                            #Inside the list I iterate through each button
                             r.config(state = "disabled")
                             #Making each button in that frame dissabled
                     return
                 
-            if all(subboard_check[i][r] != "" for i in range(3) for r in range(3)):#If all buttons are filled but no winner
+            if all(subboard_check[i][r] != "" for i in range(3) \
+                   for r in range(3)):#If all buttons are filled but no winner
                 subboard_winner[mainrow][maincol] = "T"
                 #To make confirm the board can no longer be played in
                 for i in buttons[mainrow][maincol]:#Iterating through the list
@@ -1015,24 +1091,115 @@ def Stictactoe():
     bot_button.grid(row = 1, column = 2, pady = 20, padx = 20)
 
 
-
-
-def Memory():
-
-    memory = tk.Toplevel(root)
-    memory.title("Memory Mania")
-    memory.geometry("900x800")
-    memory.resizable(False, False)  # stop the resizing of the window
-
-
-
-    memory.mainloop()
-
 def blackjack():
+    #I am using a tutorial by codemy.com for this blackjack game
     blackjack = tk.Toplevel(root)
     blackjack.title("Memory Mania")
-    root.geometry("900x800")
-    root.resizable(False, False)  # stop the resizing of the window
+    blackjack.geometry("900x500")
+    blackjack.resizable(False, False)  # stop the resizing of the window
+    blackjack.config(bg = "#FAF0CA")
+
+    #resizing our images
+    def resize_cards(card):
+        pass
+
+    #creating the deck list first
+    deck = []
+
+    cardnum = tk.Label(blackjack, 
+                       text = f"Cards left in deck: 52", 
+                       font = pixel_font_buttons_hangman, fg = "#0D3B66",
+                        bg = "#FAF0CA")
+    def shuffle():
+        #shuffle the cards
+        deck.clear()
+        #making the deck
+        suits = ["diamonds", "clubs", "hearts", "spades"]
+        #These values range from 2 to ace
+        #ace is the 15th card
+        values = range(2, 15)
+        #one card value for each suit
+        for i in suits:
+            #i is each individual suit
+            for r in values:
+                #r is each value
+                deck.append(f"{r}_of_{i}")
+                #name them like our images
+        cardnum.config(text = f"Cards left in deck: {len(deck)}", 
+                       fg = "#0D3B66")
+
+    
+    def dealing():
+        try:  
+            nonlocal deck
+            #making the get card lists
+            #Using these lists to keep track of what cards each person has
+            dealer = []
+            player = []
+
+            #FOR DEALER
+            #getting random card using random choice out of deck
+            card = random.choice(deck)
+            #remove card from deck
+            deck.remove(card)
+            #give card to dealer
+            dealer.append(card)
+            #show player dealer has a card
+            dealer_card.config(text = card)
+
+            #FOR PLAYER
+            #getting random card using random choice out of deck
+            card = random.choice(deck)
+            #remove card from deck
+            deck.remove(card)
+            #give card to dealer
+            player.append(card)
+            #show player dealer has a card
+            player_card.config(text = card)
+
+            cardnum.config(text = f"Cards left in deck: {len(deck)}", 
+                           fg = "#0D3B66")
+        except:
+            cardnum.config(fg = "#FF0000", text = "There are no more cards"\
+                           " in the deck, please shuffle again")
+    #add cards into the deck
+    shuffle()
+    #creating a deck with all the cards
+    jack_title = tk.Label(blackjack, text = "Welcome to BlackJack!!", 
+                          font = pixel_font_buttons_hangman, fg = "#0D3B66",
+                          bg = "#FAF0CA")
+
+    jack_title.pack()
+    cardnum.pack()
+    
+    Mframe = tk.Frame(blackjack, bg = "green")
+    Mframe.pack(pady = 20)
+    #frame with text around border
+
+    #where cards will be displayed
+    Dframe = tk.LabelFrame(Mframe,text = "Dealer", bg = "green", bd = 0)
+    Dframe.grid(row = 0, column = 0, padx = 20, ipady = 10)
+
+    Pframe = tk.LabelFrame(Mframe,text = "Player", bg = "green", bd = 0)
+    Pframe.grid(row = 0, column = 1, ipady = 10, padx = 20)
+
+    #putting cards into frames
+    dealer_card = tk.Label(Dframe, text = "spacefiller")
+    player_card = tk.Label(Pframe, text = "playerflilielr")
+    dealer_card.pack(pady = 20)
+    player_card.pack(pady = 20)
+
+    shuffle_button = tk.Button(blackjack, text = "Shuffle", 
+                               font = pixel_font_buttons_TTT, 
+                               command = shuffle, bg = "#0D3B66",
+                          fg = "#FAF0CA")
+    shuffle_button.pack(pady = 20)
+
+    hit_button = tk.Button(blackjack, text = "Hit", 
+                           font = pixel_font_buttons_TTT, command = dealing, 
+                           bg = "#0D3B66", fg = "#FAF0CA")
+    hit_button.pack(pady = 20)
+
     blackjack.mainloop()
 
 
@@ -1070,12 +1237,6 @@ def help():
                               font = pixel_font_buttons_small, 
                             fg = "#0D3B66", bg = "#FAF0CA", 
                             justify = "center")
-    def memory_help():
-        nonlocal changing_label
-        changing_label.config(text = "sdlkhflskdjf", 
-                              font = pixel_font_buttons_small, 
-                            fg = "#0D3B66", bg = "#FAF0CA", 
-                            justify = "center")
     def blackjack_help():
         nonlocal changing_label
         changing_label.config(text = "sdlkhflskdjf", 
@@ -1097,11 +1258,6 @@ def help():
                                      font = pixel_font_buttons_hangman, 
                                      fg = "#FAF0CA", bg = "#0D3B66", 
                                      relief = "flat")
-    memory_help_button = tk.Button(help, text = "Memory Game help?", 
-                                   command=TTT_help, 
-                                     font = pixel_font_buttons_hangman, 
-                                     fg = "#FAF0CA", bg = "#0D3B66", 
-                                     relief = "flat", padx=5)
     blackjack_help_button = tk.Button(help, text = "Black Jack help?", 
                                    command=TTT_help, 
                                      font = pixel_font_buttons_hangman, 
@@ -1111,7 +1267,6 @@ def help():
     changing_label.pack(pady = 10)
     TTT_help_button.pack(pady = 20, padx = 20)
     hangman_help_button.pack(pady = 20, padx = 20)
-    memory_help_button.pack(pady = 20, padx = 20)
     blackjack_help_button.pack(pady = 20, padx = 20)
 
 
@@ -1131,7 +1286,7 @@ help_button = tk.Button(root, text = "?", command = help,
                         )
 
 frame_hangman = tk.Frame(root, bg = "#FAF0CA", borderwidth=0,)
-frame_hangman.grid(row = 1, column = 0, pady = 50, padx = 10)
+frame_hangman.grid(row = 1, column = 0, pady = 40, padx = 10)
 hangman_button_image = tk.Button(frame_hangman, image = hangman_image, 
                                  command = hangman, 
                            font = pixel_font_buttons , 
@@ -1157,20 +1312,8 @@ Stictactoe_button = tk.Button(frame_ttt, text = "Super Tic Tac Toe",
                                pady = 5, padx = 5)
 Stictactoe_button.pack()
 
-
-frame_memory = tk.Frame(root, bg = "#FAF0CA", borderwidth=0)
-frame_memory.grid(row = 4, column = 0, rowspan=2, pady = 5, padx = 10)
-Memory_image = tk.Button(frame_memory, image = hangman_image,command=Memory, 
-                         borderwidth=0,)
-Memory_button = tk.Button(frame_memory, text = "Memory Mania", command = Memory, 
-                          font = pixel_font_buttons, fg = "#FAF0CA", 
-                          bg = "#0D3B66", borderwidth = 0, 
-                          padx = 45, pady = 5)
-Memory_image.pack()
-Memory_button.pack()
-
 blackjack_frame = tk.Frame(root, bg = "#FAF0CA", borderwidth=0)
-blackjack_frame.grid(row = 4, column = 2, rowspan=2, pady = 5, padx = 10)
+blackjack_frame.grid(row = 4, column = 1, rowspan=2, pady = 5, padx = 10)
 blackjack_image = tk.Button(blackjack_frame, image = hangman_image, 
                             command=blackjack, borderwidth=0)
 
