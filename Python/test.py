@@ -618,7 +618,7 @@ def Stictactoe():
                         [subboard_check[i][2-i] for i in range(3)])#Diagonal2
             
             for win in winning:
-                if win[0] == win[1] == win[2] != "" and win[0] != "T":#If all three values in a row are the same and not empty
+                if win[0] == win[1] == win[2] != "":#If all three values in a row are the same and not empty
                     #take note of who won the subboard in the nested list
                     subboard_winner[mainrow][maincol] = current_player
                     if subboard_winner[mainrow][maincol] == "X":
@@ -685,6 +685,7 @@ def Stictactoe():
                     button_subboard.append(buttons_row)#Adding the row to a 3x3 grid
                 buttons[d][r] = button_subboard
                 #changing the "" from the nested list into our button 3x3 grid
+
 
 
     def Stictactoe_bot():
@@ -808,9 +809,10 @@ def Stictactoe():
                 if subboard_winner[subrow][subcol] == "":
                     allowed_frame_coords_x = subrow
                     allowed_frame_coords_y = subcol
-                    #If the target board was not won then...
-                    subboards[subrow][subcol].config(bg = "#0D3B66")
-                    #Change color of target
+                    if subboard_winner[subrow][subcol] == "":
+                        #If the target board was not won then...
+                        subboards[subrow][subcol].config(bg = "#0D3B66")
+                        #Change color of target
                 else:
                     allowed_frame_coords_x = ""
                     allowed_frame_coords_y = ""
@@ -856,12 +858,13 @@ def Stictactoe():
                 #check if the subboard fo these coords wins
                 check_winner_main()#Check if main board wins
                 if subboard_winner[subrow][subcol] == "":
+                    #If the target board was not won then...
+                        subboards[subrow][subcol].config(bg = "#0D3B66")
+                    #Change color of target
+                if subboard_winner[subrow][subcol] == "":
                     #If it isn't then change the allowed coords to the next subboard
                     allowed_frame_coords_x = subrow
                     allowed_frame_coords_y = subcol
-                    #If the target board was not won then...
-                    subboards[subrow][subcol].config(bg = "#0D3B66")
-                    #Change color of target
                 else:
                     #If it is then allow the player to move anywhere
                     allowed_frame_coords_x = ""
@@ -1003,7 +1006,7 @@ def Stictactoe():
                         [subboard_winner[i][2-i] for i in range(3)])#another diagonal
             
             for win in winning:
-                if win[0] == win[1] == win[2] != "" and win[0] != "T":#If all three values in a row are the same and not emptyF
+                if win[0] == win[1] == win[2] != "":#If all three values in a row are the same and not emptyF
                     game_finished = True
                     STTT_title.config(text = f"{win[0]} wins!")
                     if win[0] == "O":
@@ -1088,7 +1091,6 @@ def Stictactoe():
     bot_button.grid(row = 1, column = 2, pady = 20, padx = 20)
 
 
-
 def blackjack():
     #I am using a tutorial by codemy.com for this blackjack game
     blackjack = tk.Toplevel(root)
@@ -1096,11 +1098,11 @@ def blackjack():
     blackjack.geometry("900x500")
     blackjack.resizable(False, False)  # stop the resizing of the window
     blackjack.config(bg = "#FAF0CA")
+
     #resizing our images
     def resize_cards(card):
-        card_image = Image.open(card).resize((150, 218))
-        cardimage_resized = ImageTk.PhotoImage(card_image)
-        return(cardimage_resized)
+        pass
+
     #creating the deck list first
     deck = []
 
@@ -1108,29 +1110,6 @@ def blackjack():
                        text = f"Cards left in deck: 52", 
                        font = pixel_font_buttons_hangman, fg = "#0D3B66",
                         bg = "#FAF0CA")
-    jack_title = tk.Label(blackjack, text = "Welcome to BlackJack!!", 
-                          font = pixel_font_buttons_hangman, fg = "#0D3B66",
-                          bg = "#FAF0CA")
-
-    jack_title.pack()
-    cardnum.pack()
-    
-    Mframe = tk.Frame(blackjack, bg = "green")
-    Mframe.pack(pady = 10)
-    #frame with text around border
-
-    #where cards will be displayed
-    Dframe = tk.LabelFrame(Mframe,text = "Dealer", bg = "green", bd = 0)
-    Dframe.grid(row = 0, column = 0, padx = 20, ipady = 5)
-
-    Pframe = tk.LabelFrame(Mframe,text = "Player", bg = "green", bd = 0)
-    Pframe.grid(row = 0, column = 1, ipady = 5, padx = 20)
-
-    #putting cards into frames
-    dealer_card = tk.Label(Dframe, text = "spacefiller")
-    player_card = tk.Label(Pframe, text = "playerflilielr")
-    dealer_card.pack(pady = 20)
-    player_card.pack(pady = 20)
     def shuffle():
         #shuffle the cards
         deck.clear()
@@ -1148,36 +1127,35 @@ def blackjack():
                 #name them like our images
         cardnum.config(text = f"Cards left in deck: {len(deck)}", 
                        fg = "#0D3B66")
+
     
     def dealing():
-        try:
+        try:  
+            nonlocal deck
             #making the get card lists
             #Using these lists to keep track of what cards each person has
-
             dealer = []
             player = []
+
             #FOR DEALER
             #getting random card using random choice out of deck
             card = random.choice(deck)
-            #get the image
-            dealer_image = resize_cards(f"Python/{card}.png")
             #remove card from deck
             deck.remove(card)
             #give card to dealer
             dealer.append(card)
             #show player dealer has a card
-            dealer_card.config(image = dealer_image)
+            dealer_card.config(text = card)
 
             #FOR PLAYER
             #getting random card using random choice out of deck
             card = random.choice(deck)
-            player_image = resize_cards(f"Python/{card}.png")
             #remove card from deck
             deck.remove(card)
             #give card to dealer
             player.append(card)
             #show player dealer has a card
-            player_card.config(image = player_image)
+            player_card.config(text = card)
 
             cardnum.config(text = f"Cards left in deck: {len(deck)}", 
                            fg = "#0D3B66")
@@ -1186,19 +1164,41 @@ def blackjack():
                            " in the deck, please shuffle again")
     #add cards into the deck
     shuffle()
-    dealing()
     #creating a deck with all the cards
+    jack_title = tk.Label(blackjack, text = "Welcome to BlackJack!!", 
+                          font = pixel_font_buttons_hangman, fg = "#0D3B66",
+                          bg = "#FAF0CA")
 
-    hit_button = tk.Button(blackjack, text = "Hit", 
-                           font = pixel_font_buttons_TTT, command = dealing, 
-                           bg = "#0D3B66", fg = "#FAF0CA")
-    hit_button.pack(pady = 20, padx = 10)
+    jack_title.pack()
+    cardnum.pack()
+    
+    Mframe = tk.Frame(blackjack, bg = "green")
+    Mframe.pack(pady = 20)
+    #frame with text around border
+
+    #where cards will be displayed
+    Dframe = tk.LabelFrame(Mframe,text = "Dealer", bg = "green", bd = 0)
+    Dframe.grid(row = 0, column = 0, padx = 20, ipady = 10)
+
+    Pframe = tk.LabelFrame(Mframe,text = "Player", bg = "green", bd = 0)
+    Pframe.grid(row = 0, column = 1, ipady = 10, padx = 20)
+
+    #putting cards into frames
+    dealer_card = tk.Label(Dframe, text = "spacefiller")
+    player_card = tk.Label(Pframe, text = "playerflilielr")
+    dealer_card.pack(pady = 20)
+    player_card.pack(pady = 20)
+
     shuffle_button = tk.Button(blackjack, text = "Shuffle", 
                                font = pixel_font_buttons_TTT, 
                                command = shuffle, bg = "#0D3B66",
                           fg = "#FAF0CA")
-    shuffle_button.pack(pady = 20, anchor = "e")
+    shuffle_button.pack(pady = 20)
 
+    hit_button = tk.Button(blackjack, text = "Hit", 
+                           font = pixel_font_buttons_TTT, command = dealing, 
+                           bg = "#0D3B66", fg = "#FAF0CA")
+    hit_button.pack(pady = 20)
 
     blackjack.mainloop()
 
