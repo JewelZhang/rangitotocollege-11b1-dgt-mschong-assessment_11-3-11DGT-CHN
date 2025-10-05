@@ -1,117 +1,110 @@
+"""My Game Compendium.
+
+This is my game compedium it contains the games, Blackjack, Super Tic Tac Toe
+and Hangman.
+When you press play there is a button which allows you to choose which game
+you want to play.
+Have fun playing!!
+"""
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
-from tkinter.font import Font#So I can use fonts in the games and menu
-import random#For hangman and blackjack
-
-
+from tkinter.font import Font  # So I can use fonts in the games and menu
+import random  # For hangman and blackjack
 
 root = tk.Tk()
-
-root.geometry("950x850")#The size of the window
-
+root.geometry("950x850")  # The size of the window
 root.resizable(False, False)  # stop the resizing of the window
+root.configure(bg="#FAF0CA")  # The background color of the window
 
-root.configure(bg="#FAF0CA")#The background color of the window
+pixel_font_title = Font(family="VT323", size=70)
+pixel_font_buttons = Font(family="VT323", size=30)
+pixel_font_buttons_ttt = Font(family="VT323", size=26)
+pixel_font_labels = Font(family="VT323", size=40)
+pixel_font_buttons_hangman = Font(family="VT323", size=20)
+pixel_font_buttons_small = Font(family="VT323", size=15)
+scary_font_label = Font(family="Nosifer", size=20)
 
-pixel_font_title = Font(family = "VT323", size = 70)
-pixel_font_buttons = Font(family = "VT323", size = 30)
-pixel_font_buttons_TTT = Font(family = "VT323", size = 26)
-pixel_font_labels = Font(family = "VT323", size = 40)
-pixel_font_buttons_hangman = Font(family = "VT323", size = 20)
-pixel_font_buttons_small = Font(family = "VT323", size = 15)
-scary_font_label = Font(family = "Nosifer", size = 20)
-
-
-Title = tk.Label(root, text = "Game compedium", font = (pixel_font_title), 
-                 fg = "#0D3B66", bg = "#FAF0CA").grid(row=0, 
-                                                      column=0, columnspan=3,
-                                                        pady=5, padx = 210)
-#Stand in for the title, I willl change later
-
+Title = tk.Label(root, text="Gamecompedium", font=(pixel_font_title),
+                 fg="#0D3B66", bg="#FAF0CA").grid(row=0,
+                                                  column=0, columnspan=3,
+                                                  pady=5, padx=210)
+# Stand in for the title, I willl change later
 
 scores = {}
+
+
 def hangman():
+    """Hangman game.
+
+    This is the hangman game.
+    It is a word guessing game where the person guesses a letter or a word
+    and if its right nothing will happen to the man
+    if its wrong the man will lose a life
+    """
     global scores
-    #Using a hangman tut from Data Science with Onur
-    words = {"easy":["memento", "jewel", "killer", "common", "season", 
-                        "theater", "garden", "holiday", "morning", "mother"],
+    # Using a hangman tut from Data Science with Onur
+    words = {"easy": ["cat", "dog", "sun", "ball", "car", "big", "sad",
+                      "hot", "red", "eat", "tree", "house", "flower"],
+             "medium": ["memento", "killer", "common", "season",
+                        "theater", "garden", "holiday", "morning",
+                        "mother"],
 
-            "medium":["jinx", "kayak", "yuna", "macabre", "partner",
-                        "prediction", "lounge", "strength", "whiskey", 
-                        "zombie"],
+             "hard": ["macabre", "prediction", "whiskey", "jazz", "klutz",
+                      "sphinx", "executioner", "frequency",
+                      "xylophone"]
+             }
 
-            "hard":["jazz", "klutz", "convoluted", "sphinx", "zealous", 
-                    "executioner", "mimikyu", "frequency", "jewelzhang", 
-                    "xylophone"]
+    letters_guessed = []  # Storing letters guessed
 
-            }
+    lives = 12  # Number of lives user has
 
-    letters_guessed = []#Storing letters guessed
+    score = 0  # The users score
 
-    lives = 12#Number of lives user has
-
-    score = 0#The users score
-
-    print(score)
-
-
-
-
-
-    hangman = tk.Toplevel(root)#A new window for hangman
+    hangman = tk.Toplevel(root)  # A new window for hangman
     hangman.title("Hangman")
     hangman.geometry("800x900")
     hangman.resizable(False, False)  # stop the resizing of the window
-    hangman.configure(bg="#FAF0CA")#The background color of the window
+    hangman.configure(bg="#FAF0CA")  # The background color of the window
 
-    head = tk.Label(hangman, text = "Guess the word, \nor the man gets hanged", 
-                    font=scary_font_label, fg = "#CC0000", 
-                    bg = "#FAF0CA")#heading
+    head = tk.Label(hangman, text="Guess the word, \nor the man gets hanged",
+                    font=scary_font_label, fg="#CC0000",
+                    bg="#FAF0CA")  # heading
 
-    head.pack(pady = 5 )
+    head.pack(pady=5)
 
-
-    difficulty = random.choice(list(words))#Choosing a random difficulty first
-    word = random.choice(words[difficulty])#Then choosing a random word
+    difficulty = random.choice(list(words))
+    # Choosing a random difficulty first
+    word = random.choice(words[difficulty])
+    # Then choosing a random word
     guessed = ["_ "] * len(word)
-    #Number of lines = number of letters in word for user to guess, 
-    #each line will be replaced when user guesses correctly
+    # Number of lines = number of letters in word for user to guess,
+    # each line will be replaced when user guesses correctly
 
+    enter = tk.Entry(hangman, font=pixel_font_buttons, bg="#FAF0CA")
+    # A textbox where the user can enter their guesses(single line)
+    enter.pack(pady=10)
 
+    label = tk.Label(hangman, text="_ " * len(word),
+                     font=pixel_font_labels, bg="#FAF0CA")
+    # the lines to show how many letters are in the word
+    label.pack(pady=5)
 
+    letters = tk.Label(hangman, text="Wrong Letters/Words guessed: ",
+                       wraplength=700,
+                       font=pixel_font_buttons, bg="#FAF0CA")
+    # To show the user what letters they have guessed wrong
+    letters.pack(pady=5)
 
+    liveslabel = tk.Label(hangman, text=f"Lives left until the man gets "
+                          f"hanged: {lives}",
+                          font=pixel_font_buttons, bg="#FAF0CA")
+    liveslabel.pack(pady=5)
 
+    def check(event=None):
+        # To check if the user guessed a letter in the word
 
-    enter = tk.Entry(hangman, font = pixel_font_buttons, bg = "#FAF0CA")
-    #A textbox where the user can enter their guesses(single line)
-    enter.pack(pady = 10)
- 
-
-
-    label = tk.Label(hangman, text = "_ " * len(word), 
-                     font = pixel_font_labels, bg = "#FAF0CA")
-    #the lines to show how many letters are in the word
-    label.pack(pady = 5)
-
-
-
-    letters = tk.Label(hangman, text = f"Wrong Letters/Words guessed: ",
-                        wraplength = 700,
-                       font = pixel_font_buttons, bg = "#FAF0CA")
-    #To show the user what letters they have guessed wrong
-    letters.pack(pady = 5)
-
-
-
-    liveslabel = tk.Label(hangman, text = f"Lives left until the man gets hanged: {lives}", font = pixel_font_buttons, bg = "#FAF0CA")
-    liveslabel.pack(pady = 5)
-
-
-
-    def check(event = None):#To check if the user guessed a letter in the word
-
-        nonlocal lives#Accessing lives outside the function
+        nonlocal lives  # Accessing lives outside the function
         nonlocal guessed
         nonlocal score
         nonlocal head
@@ -119,10 +112,12 @@ def hangman():
         nonlocal word
         nonlocal letters_guessed
 
-        guess = enter.get()#Getting the letter/word guessed by the user
+        guess = enter.get()
+        # Getting the letter/word guessed by the user
         guess = guess.lower()
 
-        enter.delete(0, "end")#clearing the Entrybox thing after each use
+        enter.delete(0, "end")
+        # clearing the Entrybox thing after each use
 
         if guess in letters_guessed:
             return
@@ -133,19 +128,29 @@ def hangman():
 
                 if word[i] == guess:
 
-                    guessed[i] = guess#Replace the line with the letter if they gusses correctly
+                    guessed[i] = guess
+                    # Replace the line with the letter if they guess correctly
 
-                    label.config(text = "".join(guessed))#to join all the letters and lines together + updating the label
+                    label.config(text="".join(guessed))
+                    # to join all the letters and lines together
+                    # + updating the label
 
-            if guess == word.lower() or "".join(guessed) == word:#If the user guesses the whole word or all the letters
+            if guess == word.lower() or "".join(guessed) == word:
+                # If the user guesses the whole word or all the letters
 
-                guessed = guess#Replace the line with the letter if they guesses correctly
+                guessed = guess
+                # Replace the line with the letter if they guesses correctly
 
-                label.config(text = "".join(word))#to join all the letters and lines together + updating the label
+                label.config(text="".join(word))
+                # to join all the letters and lines together
+                # + updating the label
 
-                checkbutton.config(command = nextword, text = "Next word")#giving the option to change the word
+                checkbutton.config(command=nextword, text="Next word")
+                # giving the option to change the word
 
-                head.config(text = f"You guessed the word!!\n Click next word to continue playing")#Changing the text to show they won
+                head.config(text="You guessed the word!!\n"
+                            "Click next word to continue playing")
+                # Changing the text to show they won
 
                 if difficulty == "easy":
                     score += 1
@@ -155,50 +160,56 @@ def hangman():
                     score += 3
                 print(score)
 
-
-
         if guess not in word.lower() and guess not in letters_guessed:
 
             lives = lives - 1
 
-            liveslabel.config(text = f"Lives left until the man gets hanged: {lives}")
+            liveslabel.config(text=f"Lives left until the man"
+                              f" gets hanged: {lives}")
 
             if guess not in letters_guessed:
 
-                letters_guessed.append(guess)#Adding the wrong guess to the list
+                letters_guessed.append(guess)
+                # Adding the wrong guess to the list
 
-                letters.config(text = f"Wrong Letters/Words guessed: {', '.join(letters_guessed)}")#Showing the user what they guessed wrong
+                letters.config(text=f"Wrong Letters/Words guessed:"
+                               f"{', '.join(letters_guessed)}")
+                # Showing the user what they guessed wrong
 
-
-            drawman(lives)#Draw the man!!
+            drawman(lives)  # Draw the man!!
 
         if lives == 0:
+            drawman(lives)  # Draw the man(last time...)
 
-            drawman(lives)#Draw the man(last time...)
-
-            print(score)
-
-            head.config(text = f"Uh oh!! The man is dead...\n The word was {word}", font=scary_font_label, fg = "#CC0000", bg = "#FAF0CA")
-            enter.config(state = "disabled")
-            #Disabling the entry box so the player can't keep guessing
-            hangman.unbind("<Return>")#Unbinding the enter key so it cant be pressed
-            #Unbinding the button so it cant be clicked
+            head.config(text=f"Uh oh!! The man is dead...\n"
+                        f"The word was {word}",
+                        font=scary_font_label,
+                        fg="#CC0000", bg="#FAF0CA")
+            enter.config(state="disabled")
+            # Disabling the entry box so the player can't keep guessing
+            hangman.unbind("<Return>")
+            # Unbinding the enter key so it cant be pressed
+            # Unbinding the button so it cant be clicked
             checkbutton.pack_forget()
-            #I learnt this from the yt channel Tkinter.com
-            #Disabling the button so the player can't keep losing lives 
+            # I learnt this from the yt channel Tkinter.com
+            # Disabling the button so the player can't keep losing lives
             letters.pack_forget()
-            enter.pack_forget()#pack_forget removes the wiget from the window so the player cant keep guessing after they lose
-            leaderboard = tk.Label(hangman, text = "Do you want to add your score to the leaderboard?", 
-                                   font = pixel_font_buttons_hangman, bg = "#FAF0CA", 
-                                   fg = "#0D3B66")
-            leaderboard.pack(pady = 5)
+            enter.pack_forget()
+            # pack_forget removes the wiget from the window so the player
+            # cant keep guessing after they lose
+            leaderboard = tk.Label(hangman, text="Do you want to add your "
+                                   " score to the leaderboard?",
+                                   font=pixel_font_buttons_hangman,
+                                   bg="#FAF0CA",
+                                   fg="#0D3B66")
+            leaderboard.pack(pady=5)
 
-            seeLB = tk.Button(hangman, command = scoreboard, 
-                              text = "Open leaderboard", 
-                              font = pixel_font_buttons_hangman,
-                              fg = "#FAF0CA", bg = "#0D3B66")
-            seeLB.pack(pady = 5)
-
+            seelb = tk.Button(hangman, command=scoreboard,
+                              text="Open leaderboard",
+                              font=pixel_font_buttons_hangman,
+                              fg="#FAF0CA", bg="#0D3B66")
+            seelb.pack(pady=5)
+# CODE WOF CHECK HERE
 
     def nextword(event = None):
 
@@ -208,33 +219,31 @@ def hangman():
 
         nonlocal difficulty
 
-        checkbutton.config(command = check, text = "Check letter")
-        #Changing back the button
+        checkbutton.config(command = check, text="Check letter")
+        # Changing back the button
 
         head.config(text = "Guess the word,\n or the man gets hanged", font=scary_font_label, fg = "#CC0000", bg = "#FAF0CA")
 
-        difficulty = random.choice(list(words))
-        #Choosing a random difficulty first
-
+        difficulty = random.choice(list(words))#Choosing a random difficulty first
         word = random.choice(words[difficulty])#Then choosing a random word
-
         guessed = ["_ "] * len(word)
-        #Number of lines = number of letters in word for user to guess, 
-        # #each line will be replaced when user guesses correctly
+        # Number of lines = number of letters in word for user to guess, 
+        # each line will be replaced when user guesses correctly
 
-        label.config(text = "_ " * len(word))#Resetting the lines
+        label.config(text="_ " * len(word))  # Resetting the lines
 
-        letters.config(text = f"Wrong Letters/Words guessed: ")
-        #Resetting the wrong letters guessed
+        letters.config(text=f"Wrong Letters/Words guessed: ")
+        # Resetting the wrong letters guessed
 
-        letters_guessed.clear()#Clearing the list of wrong letters guessed
-
-
-
-    hangman.bind('<Return>', check)#So user can also presses enter to check their guess
+        letters_guessed.clear()  # Clearing the list of wrong letters guessed
 
 
-    checkbutton = tk.Button(hangman, text = "Check letter", 
+
+    hangman.bind('<Return>', check)
+    # So user can also presses enter to check their guess
+
+
+    checkbutton = tk.Button(hangman, text="Check letter", 
                             font = pixel_font_buttons_hangman, 
                             bg = "#0D3B66", fg = "#FAF0CA",
                             command = lambda:check(), pady = 0, 
@@ -250,7 +259,7 @@ def hangman():
         scoreboard_window = tk.Toplevel(hangman)
         scoreboard_window.title("Hangman scores")
         scoreboard_window.geometry("500x800")
-        scoreboard_window.resizable(False, False)  
+        scoreboard_window.resizable(False, False)
         # stop the resizing of the window
         scoreboard_window.configure(bg="#FAF0CA")
         #The background color of the window
@@ -441,7 +450,7 @@ def Stictactoe():
     TTT_title.grid(row = 0, column = 0, columnspan = 3, pady = 10, padx = 10)
 
     def Stictactoe_friend():
-        global pixel_font_buttons_TTT
+        global pixel_font_buttons_ttt
         global pixel_font_labels
         FTTT = tk.Toplevel(TTT)
         FTTT.title("Tic Tac Toes but you aren't lonely!")
@@ -664,7 +673,7 @@ def Stictactoe():
                     for k in range(3):#Three columns per row for the buttons
                         #Put the buttons into the frame
                         button = tk.Button(subboard_frame, text = "",
-                                            font = pixel_font_buttons_TTT, 
+                                            font = pixel_font_buttons_ttt, 
                                             width = 5, height = 1, borderwidth=0,
                                             bg = "#F4D35E",
                                             command = lambda d=d, r=r, j=j,
@@ -688,7 +697,7 @@ def Stictactoe():
 
 
     def Stictactoe_bot():
-        global pixel_font_buttons_TTT
+        global pixel_font_buttons_ttt
         global pixel_font_labels
         BTTT = tk.Toplevel(TTT)
         BTTT.title("Tic Tac Toes but you ARE lonely!")
@@ -743,7 +752,7 @@ def Stictactoe():
                     for k in range(3):#Three columns per row for the buttons
                         #Put the buttons into the frame
                         button = tk.Button(subboard_frame, text = "",
-                                            font = pixel_font_buttons_TTT, 
+                                            font = pixel_font_buttons_ttt, 
                                             width = 5, height = 1, borderwidth=0,
                                             bg = "#F4D35E",
                                             command = lambda d=d, r=r, j=j,
@@ -869,9 +878,11 @@ def Stictactoe():
 
                 #Then change the button the whatever the current player is
                 if current_player == "O":#Changing the color of the square
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#0000FF")
+                    buttons[mainrow][maincol]\
+                        [subrow][subcol].config(text=current_player, bg = "#0000FF")
                 else:
-                    buttons[mainrow][maincol][subrow][subcol].config(text=current_player, bg = "#FF0000")
+                    buttons[mainrow][maincol]\
+                        [subrow][subcol].config(text=current_player, bg = "#FF0000")
                 #changing the text of the button to the current player
                 if current_player == "X":#Changing the current player after each turn
                     current_player = "O"
@@ -902,7 +913,7 @@ def Stictactoe():
                     #Rabdomise the coords until we find an empty button
                 if board[allowed_frame_coords_x][allowed_frame_coords_y]\
                     [bot_coord_X][bot_coord_Y] == "":
-                    #Change the button to the current player or whatever player the but is
+                    #Change the button to current player or player bot
                     board[allowed_frame_coords_x][allowed_frame_coords_y]\
                         [bot_coord_X][bot_coord_Y] = current_player
                     #Changing the color of the square depedning on the player
@@ -922,7 +933,8 @@ def Stictactoe():
                         allowed_frame_coords_x = bot_coord_X
                         allowed_frame_coords_y = bot_coord_Y
                         #if target board isn't won then change color
-                        subboards[bot_coord_X][bot_coord_Y].config(bg = "#0D3B66")
+                        subboards[bot_coord_X]\
+                            [bot_coord_Y].config(bg = "#0D3B66")
                     else:
                         allowed_frame_coords_x = ""
                         allowed_frame_coords_y = ""
@@ -932,13 +944,7 @@ def Stictactoe():
                                 if subboard_winner[i][r] == "":
                                     subboards[i][r].config(bg = "#0D3B66")
             else:#If allowed frame coords are either empty or the subboard is won
-                #Choose a random frame that isn't won
-                allowed_frame_coords_x = random.randint(0,2)
-                allowed_frame_coords_y = random.randint(0,2)
-                bot_coord_X = random.randint(0,2)
-                bot_coord_Y = random.randint(0,2)
-                #First choose a random frame and random button
-                #Then check random frames until we find one that isn't won
+                #check random frames until we find one that isn't won
                 while True:
                     allowed_frame_coords_x = random.randint(0,2)
                     allowed_frame_coords_y = random.randint(0,2)
@@ -963,7 +969,8 @@ def Stictactoe():
                 buttons[allowed_frame_coords_x][allowed_frame_coords_y]\
                     [bot_coord_X][bot_coord_Y].config(text=current_player, 
                                                       bg = "#0000FF")
-                check_winner_sub(allowed_frame_coords_x, allowed_frame_coords_y)
+                check_winner_sub(allowed_frame_coords_x, \
+                                 allowed_frame_coords_y)
                 check_winner_main() 
                 for i in range(3):
                     for r in range(3):
@@ -972,7 +979,7 @@ def Stictactoe():
                 current_player = "X"
 
                 if subboard_winner[bot_coord_X][bot_coord_Y] == "":
-                    #If it isn't then change the allowed coords to the next subboard
+                    #If it isn't change the allowed coords to next subboard
                     allowed_frame_coords_x = bot_coord_X
                     allowed_frame_coords_y = bot_coord_Y
                     subboards[bot_coord_X][bot_coord_Y].config(bg = "#0D3B66")
@@ -1000,10 +1007,12 @@ def Stictactoe():
                         [subboard_winner[i][1] for i in range(3)],#columnc 2
                         [subboard_winner[i][2] for i in range(3)],#Column 3
                         [subboard_winner[i][i] for i in range(3)],#Diagonal
-                        [subboard_winner[i][2-i] for i in range(3)])#another diagonal
+                        [subboard_winner[i][2-i] for i in range(3)])
+            #another diagonal
             
             for win in winning:
-                if win[0] == win[1] == win[2] != "" and win[0] != "T":#If all three values in a row are the same and not emptyF
+                if win[0] == win[1] == win[2] != "" and win[0] != "T":
+                    #If all three values in a row are the same and not empty
                     game_finished = True
                     STTT_title.config(text = f"{win[0]} wins!")
                     if win[0] == "O":
@@ -1018,18 +1027,21 @@ def Stictactoe():
                                     #Making each button in that frame dissabled
                     return
                 #prevent checking for a tie when winner is already found.
-            if all(subboard_winner[i][r] != "" for i in range(3) for r in range(3)):
+            if all(subboard_winner[i][r] != "" for i in range(3) 
+                   for r in range(3)):
                 #If all buttons are filled but no winner
                 game_finished = True
                 STTT_title.config(text = "Tie!!")
                 for i in range(3):
                     for r in range(3):
                         for j in buttons[i][r]:#Iterating through the list
-                            for k in j:#go through and disble all buttons 1 by 1
+                            for k in j:
+                                #go through and disble all buttons 1 by 1
                                 k.config(state = "disabled")
                                     #Making each button in that frame dissabled
         #Iterating through each square
-        def check_winner_sub(mainrow, maincol):#Checking if there is a winner for sub
+        def check_winner_sub(mainrow, maincol):
+            #Checking if there is a winner for sub
             #These coords are used for the subboard_check var
             nonlocal current_player
             nonlocal board
@@ -1046,7 +1058,8 @@ def Stictactoe():
                         [subboard_check[i][2-i] for i in range(3)])#Diagonal2
             
             for win in winning:
-                if win[0] == win[1] == win[2] != "":#If all three values in a row are the same and not empty
+                if win[0] == win[1] == win[2] != "":#If all three values in a 
+                    #row are the same and not empty
                     #take note od who won the subboard in the nested list
                     subboard_winner[mainrow][maincol] = win[0]
                     #The winner is the first value out of the winning line
@@ -1088,52 +1101,438 @@ def Stictactoe():
     bot_button.grid(row = 1, column = 2, pady = 20, padx = 20)
 
 
-
+player_num = 0
+nums = {}
 def blackjack():
+    global player_num
     #I am using a tutorial by codemy.com for this blackjack game
     blackjack = tk.Toplevel(root)
     blackjack.title("Memory Mania")
-    blackjack.geometry("900x500")
+    blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
-    blackjack.config(bg = "#FAF0CA")
+    blackjack.config(bg = "#0D3B66")
     #resizing our images
     def resize_cards(card):
-        card_image = Image.open(card).resize((150, 218))
+        card_image = Image.open(card).resize((135, 190))
         cardimage_resized = ImageTk.PhotoImage(card_image)
         return(cardimage_resized)
     #creating the deck list first
     deck = []
+    #we store cards of dealer and player
+    dealer = []
+    player = []
+    #we store points of the dealer and player
+    dealer_score = []
+    player_score = []
+    #keep track of amount of cards being dealt out
+    dealer_cards = 0
+    player_cards = 0
+    #SCORE THE PLAYER HAS
 
     cardnum = tk.Label(blackjack, 
                        text = f"Cards left in deck: 52", 
-                       font = pixel_font_buttons_hangman, fg = "#0D3B66",
-                        bg = "#FAF0CA")
-    jack_title = tk.Label(blackjack, text = "Welcome to BlackJack!!", 
-                          font = pixel_font_buttons_hangman, fg = "#0D3B66",
-                          bg = "#FAF0CA")
-
+                       font = pixel_font_buttons_hangman, fg = "#FAF0CA",
+                        bg = "#0D3B66")
+    jack_title = tk.Label(blackjack, text = f"Welcome to BlackJack", 
+                          font = pixel_font_buttons_hangman, fg = "#FAF0CA",
+                          bg = "#0D3B66")
     jack_title.pack()
     cardnum.pack()
     
-    Mframe = tk.Frame(blackjack, bg = "green")
-    Mframe.pack(pady = 10)
+    Mframe = tk.Frame(blackjack, bg = "#FAF0CA")
+    Mframe.pack(pady = 5)
     #frame with text around border
 
     #where cards will be displayed
-    Dframe = tk.LabelFrame(Mframe,text = "Dealer", bg = "green", bd = 0)
-    Dframe.grid(row = 0, column = 0, padx = 20, ipady = 5)
+    Dframe = tk.LabelFrame(Mframe,text = "Dealer", bg = "#FAF0CA", 
+                           fg = "#0D3B66", bd = 0, 
+                           font = pixel_font_buttons_small, pady = 5, 
+                           padx = 30)
+    Dframe.pack(padx = 20, pady = 5)
 
-    Pframe = tk.LabelFrame(Mframe,text = "Player", bg = "green", bd = 0)
-    Pframe.grid(row = 0, column = 1, ipady = 5, padx = 20)
+    Pframe = tk.LabelFrame(Mframe,text = "Player", bg = "#FAF0CA", 
+                           fg = "#0D3B66", bd = 0, 
+                           font = pixel_font_buttons_small, pady = 5, 
+                           padx = 30)
+    Pframe.pack(padx = 20)
+
+    def openLB():
+        sb_window = tk.Toplevel(blackjack)
+        sb_window.title("Hangman scores")
+        sb_window.geometry("500x800")
+        sb_window.resizable(False, False)  
+        # stop the resizing of the window
+        sb_window.configure(bg="#FAF0CA")
+        #The background color of the window
+        label_name = tk.Label(sb_window, 
+                            text = "Please enter a new name", 
+                            fg = "#0D3B66",
+                            bg = "#FAF0CA", font = pixel_font_labels)
+        label_name.pack()
+        name_enter = tk.Entry(sb_window,  bg = "#FAF0CA", 
+                        font = pixel_font_labels)
+        name_enter.pack()
+        name_warning = tk.Label(sb_window, 
+                                text = "Please enter a name under 7 letters", 
+                                fg = "#0D3B66",
+                            bg = "#FAF0CA", 
+                            font = pixel_font_buttons_hangman)
+        name_warning.pack(pady = 5)
+
+        def get_name():
+            global player_num
+            global nums
+            #I used a tutorial by Tutorialspoint for the scroll bar
+            value = name_enter.get()
+            if len(value) <= 6:
+                confirmNamewin = tk.Toplevel(blackjack)
+                confirmNamewin.title("BlackJack scores")
+                confirmNamewin.geometry("400x800")
+                confirmNamewin.resizable(False, False)  
+                confirmNamewin.grid()
+
+                nums[value] = player_num
+
+                scrollframe = tk.Frame(confirmNamewin, bg = "#FAF0CA")
+                scrollframe.grid(row = 0, column = 0, sticky="nsew")
+
+                canvasScroll = tk.Canvas(scrollframe, bg = "#FAF0CA")
+                #yview makes the scroll bar control canvas vertical scroll
+                scrollbar = tk.Scrollbar(scrollframe
+                                        , orient="vertical", 
+                                        command=canvasScroll.yview)
+                scrollbar.grid(row = 0, column = 1, sticky = "ns")
+                canvasScroll.configure(yscrollcommand = scrollbar.set)
+
+                content = tk.Frame(canvasScroll, bg = "#FAF0CA")
+                content.grid(row = 0, column = 0, sticky = "nsew")
+                content.rowconfigure(0, weight = 1)
+                content.columnconfigure(0, weight = 1)
+
+                #Allow for other widgets to be in the canvas
+                canvasScroll.create_window((0, 0), window = content, 
+                                        anchor = "nw")
+                canvasScroll.grid(row = 0, column = 0, sticky = "nsew")
+                #make scroll bar expand to fit to window
+                scrollframe.bind("<Configure>", lambda e: 
+                                canvasScroll.configure(scrollregion=canvasScroll.bbox("all")))
+
+
+                # stop the resizing of the window
+                confirmNamewin.configure(bg="#FAF0CA")
+                sb_window.destroy()
+                
+                #save the scores to a dictionary with a name and score
+                title_score_UN = tk.Label(content, text = "Name",
+                font = pixel_font_labels, 
+                                        fg = "#FAF0CA", bg = "#0D3B66")
+                #spot where name is
+                title_score_S = tk.Label(content, text = "Score", 
+                                        font = pixel_font_labels, 
+                                        fg = "#FAF0CA", bg = "#0D3B66")
+                title_score_UN.grid(row = 0, column = 0, padx = 40, pady = 5)
+                title_score_S.grid(row = 0, column = 1, padx = 40, pady = 5)
+                #putting them in a grid so they can stack like a leaderboard
+                line = 1
+                #The row the name and score are on
+                for i, r in nums.items():
+                    #putting the score and name in dict into labels so the player
+                    #can see them 
+                    scorey = tk.Label(content, text = r, bg = "#FAF0CA", 
+                                    fg = "#0D3B66", font = pixel_font_labels)
+                    namey = tk.Label(content, text = i, bg = "#FAF0CA", 
+                                    fg = "#0D3B66", font = pixel_font_labels)
+                    scorey.grid(row = line, column = 1, padx = 40, pady = 5)
+                    namey.grid(row = line, column = 0, padx = 40, pady = 5)
+                    line += 1
+
+                    #make it enlarge into the window
+                    confirmNamewin.columnconfigure(0, weight=1)
+                    confirmNamewin.rowconfigure(0, weight=1)
+                    scrollframe.columnconfigure(0, weight=1)
+                    scrollframe.rowconfigure(0, weight=1)
+            else:
+                name_warning.config(fg = "#FF0000")
+
+        confirmName = tk.Button(sb_window, text = "Confirm name", 
+                                command = get_name, bg = "#0D3B66", 
+                                fg = "#FAF0CA")
+        confirmName.pack(pady = 10)
+
+    #creating the leaderboard
+    #occurs when game finishes
+    def gamefin():
+        hit_button.pack_forget()
+        shuffle_button.pack_forget()
+        stand_button.pack_forget()
+
+        GEscoreLabel = tk.Label(button_frame, 
+                                text = f"You have a score of {player_num}\n"\
+                                    "would you like to put your score on "\
+                                        "the leaderboard?", 
+                                        font = pixel_font_buttons_hangman, 
+                                        fg = "#FAF0CA",
+                                          bg = "#0D3B66")
+        GEscoreLabel.pack(padx = 20, pady = 5)
+        lbButton = tk.Button(button_frame, text = "Open leaderboard", 
+                             command = openLB, 
+                             font = pixel_font_buttons_hangman, 
+                             fg = "#FAF0CA",
+                             bg = "#0D3B66")
+        lbButton.pack(padx = 20, pady = 5)
+
+    #PLAYER GET CARD
+    def player_hit():
+        nonlocal player_cards
+        if player_cards < 5:
+            try:
+                #making the get card lists
+                #Using these lists to keep track of what cards each person has
+
+                #FOR PLAYER
+                #getting random card using random choice out of deck
+                player_card = random.choice(deck)
+                #remove card from deck
+                deck.remove(player_card)
+                #give card to player
+                player.append(player_card)
+                cardnum.config(text = f"Cards left in deck: {len(deck)}", 
+                            fg = "#FAF0CA")
+                #appending the value of the card too
+                #stripping the text from the card value and making it only num
+                #Using split and spliting it from the first _ and then int()
+                pvalue = int(player_card.split("_", 1)[0])
+                if pvalue == 14:
+                    if sum(player_score) + 11 > 21:
+                        player_score.append(1)
+                    else:
+                        player_score.append(11)
+                elif pvalue == 11 or pvalue == 12 or pvalue == 13:
+                    player_score.append(10)
+                else:
+                    player_score.append(pvalue)
+
+                #Display cards
+                #seeing which cards should be displayed in which spot
+                if player_cards == 0:
+                    #resize card
+                    player_image_1 = resize_cards(f"Python/{player_card}.png")
+                    #output card
+                    player_card_1.config(image = player_image_1)
+                    #save card
+                    player_card_1.image = player_image_1
+                    player_cards += 1
+
+                elif player_cards == 1:
+                    #resize card
+                    player_image_2 = resize_cards(f"Python/{player_card}.png")
+                    #output card
+                    player_card_2.config(image = player_image_2)
+                    #save card
+                    player_card_2.image = player_image_2
+                    player_cards += 1
+
+                elif player_cards == 2:
+                    #resize card
+                    player_image_3 = resize_cards(f"Python/{player_card}.png")
+                    #output card
+                    player_card_3.config(image = player_image_3)
+                    #save card
+                    player_card_3.image = player_image_3
+                    player_cards += 1
+
+                elif player_cards == 3:
+                    #resize card
+                    player_image_4 = resize_cards(f"Python/{player_card}.png")
+                    #output card
+                    player_card_4.config(image = player_image_4)
+                    #save card
+                    player_card_4.image = player_image_4
+                    player_cards += 1
+
+                elif player_cards == 4:
+                    #resize card
+                    player_image_5 = resize_cards(f"Python/{player_card}.png")
+                    #output card
+                    player_card_5.config(image = player_image_5)
+                    #save card
+                    player_card_5.image = player_image_5
+                    player_cards += 1
+            except:
+                cardnum.config(fg = "#FF0000", text = "There are no more" 
+                               " cards in the deck, please shuffle again")  
+            blackjack_score("player") 
+
+    #DEALER GET CARD
+    def dealer_hit():
+        nonlocal dealer_cards
+        #if dealer has less than 5 cards
+        if dealer_cards < 5:
+            try:
+                #FRO DEALER
+                #getting random card using random choice out of deck
+                dealer_card = random.choice(deck)
+                #remove card from deck
+                deck.remove(dealer_card)
+                #give card to dealer
+                dealer.append(dealer_card)
+                #appending the value of the card too
+                #stripping the text from the card value and making it only num
+                #Using split and spliting it from the first _ and then int()
+                dvalue = int(dealer_card.split("_", 1)[0])
+                if dvalue == 14:
+                    if sum(dealer_score) + 11 > 21:
+                        dealer_score.append(1)
+                    else:
+                        dealer_score.append(11)
+                elif dvalue == 11 or dvalue == 12 or dvalue == 13:
+                    dealer_score.append(10)
+                else:
+                    dealer_score.append(dvalue)
+
+                cardnum.config(text = f"Cards left in deck: {len(deck)}", 
+                            fg = "#FAF0CA")
+
+                #Display cards
+                #seeing which cards should be displayed in which spot
+                if dealer_cards == 0:
+                    #resize card
+                    dealer_image_1 = resize_cards(f"Python/{dealer_card}.png")
+                    #dealer image backside
+                    dealer_back = resize_cards(f"Python/back_card.png")
+                    #output backside
+                    dealer_card_1.config(image = dealer_back)
+                    #save card
+                    dealer_card_1.image = dealer_back
+                    dealer_cards += 1
+
+                elif dealer_cards == 1:
+                    #resize card
+                    dealer_image_2 = resize_cards(f"Python/{dealer_card}.png")
+                    #output card
+                    dealer_card_2.config(image = dealer_image_2)
+                    #save card
+                    dealer_card_2.image = dealer_image_2
+                    dealer_cards += 1
+
+                elif dealer_cards == 2:
+                    #resize card
+                    dealer_image_3 = resize_cards(f"Python/{dealer_card}.png")
+                    #output card
+                    dealer_card_3.config(image = dealer_image_3)
+                    #save card
+                    dealer_card_3.image = dealer_image_3
+                    dealer_cards += 1
+
+                elif dealer_cards == 3:
+                    #resize card
+                    dealer_image_4 = resize_cards(f"Python/{dealer_card}.png")
+                    #output card
+                    dealer_card_4.config(image = dealer_image_4)
+                    #save card
+                    dealer_card_4.image = dealer_image_4
+                    dealer_cards += 1
+
+                elif dealer_cards == 4:
+                    #resize card
+                    dealer_image_5 = resize_cards(f"Python/{dealer_card}.png")
+                    #output card
+                    dealer_card_5.config(image = dealer_image_5)
+                    #save card
+                    dealer_card_5.image = dealer_image_5
+                    dealer_cards += 1
+            except:
+                cardnum.config(fg = "#FF0000", text = "There are no more cards"\
+                           " in the deck, please shuffle again") 
+        #check for blackjack
+        blackjack_score("dealer") 
+             
+
+    def stand():
+        hit_button.config(state = "disabled")
+        stand_button.config(state = "disabled")
+        if sum(dealer_score) >= 16:
+            blackjack_score("dealer")
+        while sum(dealer_score) < 16:
+            dealer_hit()
+        stand_win()
+
+    #frame for buttons so they can be in a line
+    button_frame = tk.Frame(blackjack, bg = "#0D3B66")
+    button_frame.pack(pady = 20)
+
+    hit_button = tk.Button(button_frame, text = "Hit", 
+                           font = pixel_font_buttons_hangman, 
+                           command = player_hit, 
+                           bg = "#FAF0CA", fg = "#0D3B66", padx = 30)
+    hit_button.pack(pady = 10, padx = 10, side = "right")
+    stand_button =tk.Button(button_frame, text = "Stand", command = stand, 
+                            bg = "#FAF0CA",
+                          fg = "#0D3B66", font = pixel_font_buttons_hangman,
+                            padx = 10)
+    stand_button.pack(pady = 10, padx = 10, side = "left")
 
     #putting cards into frames
-    dealer_card = tk.Label(Dframe, text = "spacefiller")
-    player_card = tk.Label(Pframe, text = "playerflilielr")
-    dealer_card.pack(pady = 20)
-    player_card.pack(pady = 20)
+    #five cards if player goes over they win
+    dealer_card_1 = tk.Label(Dframe, text = "", bg = "#FAF0CA")
+    player_card_1 = tk.Label(Pframe, text = "", bg = "#FAF0CA")
+    dealer_card_1.grid(row = 0, column = 0, pady = 20)
+    player_card_1.grid(row = 1, column = 0, pady = 20)
+
+    dealer_card_2 = tk.Label(Dframe, text = "", bg = "#FAF0CA")
+    player_card_2 = tk.Label(Pframe, text = "", bg = "#FAF0CA")
+    dealer_card_2.grid(row = 0, column = 1, pady = 20)
+    player_card_2.grid(row = 1, column = 1, pady = 20)
+
+    dealer_card_3 = tk.Label(Dframe, text = "", bg = "#FAF0CA")
+    player_card_3 = tk.Label(Pframe, text = "", bg = "#FAF0CA")
+    dealer_card_3.grid(row = 0, column = 2, pady = 20)
+    player_card_3.grid(row = 1, column = 2, pady = 20)
+
+    dealer_card_4 = tk.Label(Dframe, text = "", bg = "#FAF0CA")
+    player_card_4 = tk.Label(Pframe, text = "", bg = "#FAF0CA")
+    dealer_card_4.grid(row = 0, column = 3, pady = 20)
+    player_card_4.grid(row = 1, column = 3, pady = 20)
+
+    dealer_card_5 = tk.Label(Dframe, text = "", bg = "#FAF0CA")
+    player_card_5 = tk.Label(Pframe, text = "", bg = "#FAF0CA")
+    dealer_card_5.grid(row = 0, column = 4, pady = 20)
+    player_card_5.grid(row = 1, column = 4, pady = 20)
+
     def shuffle():
+        nonlocal player_cards
+        nonlocal dealer_cards
         #shuffle the cards
         deck.clear()
+        #resetting the deck
+        #And resetting the cards each person has
+        dealer.clear()
+        player.clear()
+        
+        player_score.clear()
+        dealer_score.clear()
+
+        player_cards = 0
+        dealer_cards = 0
+
+        jack_title.config(text = "Welcome to BlackJack!!")
+
+        hit_button.config(state = "normal")
+        stand_button.config(state = "normal")
+
+        #resetting images of cards the player and dealer have
+        dealer_card_1.config(image = "")
+        dealer_card_2.config(image = "")
+        dealer_card_3.config(image = "")
+        dealer_card_4.config(image = "")
+        dealer_card_5.config(image = "")
+
+        player_card_1.config(image = "")
+        player_card_2.config(image = "")
+        player_card_3.config(image = "")
+        player_card_4.config(image = "")
+        player_card_5.config(image = "")
+
         #making the deck
         suits = ["diamonds", "clubs", "hearts", "spades"]
         #These values range from 2 to ace
@@ -1147,58 +1546,174 @@ def blackjack():
                 deck.append(f"{r}_of_{i}")
                 #name them like our images
         cardnum.config(text = f"Cards left in deck: {len(deck)}", 
-                       fg = "#0D3B66")
+                       fg = "#FAF0CA")
+        
+        shuffle_button.config(bg = "#3D5366", state = "disabled")
+        
+        #at the start give 2 cards for player and dealer per blackjack rules
+        dealer_hit()
+        player_hit()
+
+        dealer_hit()
+        player_hit()
     
-    def dealing():
-        try:
-            #making the get card lists
-            #Using these lists to keep track of what cards each person has
+    shuffle_button = tk.Button(button_frame, text = "Next game", 
+                               font = pixel_font_buttons_hangman, 
+                               command = shuffle, bg = "#3D5366",
+                          fg = "#0D3B66", padx = 10, state = "disabled")
+    shuffle_button.pack(pady = 10, padx = 10, side = "left")
+    #when you are finished getting cards
 
-            dealer = []
-            player = []
-            #FOR DEALER
-            #getting random card using random choice out of deck
-            card = random.choice(deck)
-            #get the image
-            dealer_image = resize_cards(f"Python/{card}.png")
-            #remove card from deck
-            deck.remove(card)
-            #give card to dealer
-            dealer.append(card)
-            #show player dealer has a card
-            dealer_card.config(image = dealer_image)
+    #checking win after dealer moves
+    def stand_win():
+        global player_num
+            #DEALER WIN
+        if sum(dealer_score) < 21:
+            if len(dealer) == 5:
+                jack_title.config(text = "5 CARDS YOU LOSE")
+                gamefin()
+            if sum(dealer_score) > sum(player_score):
+                jack_title.config(text = "YOU LOST, " \
+                " DEALER HAS A HIGHER SCORE")
+                gamefin()
+                #SHOW CARD
+                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                #save card
+                dealer_card_1.config(image = dealer_new_card)
+                dealer_card_1.image = dealer_new_card
+                #PLAYER WIN
+            elif sum(dealer_score) < sum(player_score):
+                jack_title.config(text = "YOU WIN, YOU HAVE THE HIGHER SCORE")
+                player_num += 1
+                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                #save card
+                dealer_card_1.config(image = dealer_new_card)
+                dealer_card_1.image = dealer_new_card
+                shuffle_button.config(bg = "#FAF0CA", 
+                                        state = "normal")
+                #TIE(NO POINTS)
+            else:
+                jack_title.config(text = "ITS A TIE")
+                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                #save card
+                dealer_card_1.config(image = dealer_new_card)
+                dealer_card_1.image = dealer_new_card
+                shuffle_button.config(bg = "#FAF0CA", 
+                                        state = "normal")
+                #DEALER WIN
+        elif sum(dealer_score) == 21:
+            jack_title.config(text = "BLACK JACK DEALER WINS")
+            dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+            #save card
+            dealer_card_1.config(image = dealer_new_card)
+            dealer_card_1.image = dealer_new_card
+            shuffle_button.config(bg = "#3D5366", state = "disabled")
+            gamefin()
+            #PLAYER WIN
+        else:
+            jack_title.config(text = "ITS A BUST, YOU WIN")
+            player_num += 1
+            shuffle_button.config(bg = "#FAF0CA", 
+                                state = "normal")
+            dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+            #save card
+            dealer_card_1.config(image = dealer_new_card)
+            dealer_card_1.image = dealer_new_card
 
-            #FOR PLAYER
-            #getting random card using random choice out of deck
-            card = random.choice(deck)
-            player_image = resize_cards(f"Python/{card}.png")
-            #remove card from deck
-            deck.remove(card)
-            #give card to dealer
-            player.append(card)
-            #show player dealer has a card
-            player_card.config(image = player_image)
+    #check for blackjack
+    def blackjack_score(player):
+        global player_num
+        if player == "dealer":
+            #if cards were just chuffled
+            #DEALER WIN
+            if len(dealer_score) == 2:
+                if dealer_score[0] + dealer_score[1] == 21:
+                    jack_title.config(text = "BLACK JACK, YOU LOSE")
+                    hit_button.config(state = "disabled")
+                    stand_button.config(state = "disabled")
+                    shuffle_button.config(bg = "#3D5366", state = "disabled")
+                    dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                    #save card
+                    dealer_card_1.config(image = dealer_new_card)
+                    dealer_card_1.image = dealer_new_card
+                    gamefin()
+                    #PLAYER WIN
+            elif sum(dealer_score) > 21:
+                    jack_title.config(text = "ITS A BUST, YOU WIN")
+                    player_num += 1
+                    hit_button.config(state = "disabled")
+                    stand_button.config(state = "disabled")
+                    shuffle_button.config(bg = "#FAF0CA", state = "normal")
+                    dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                    #save card
+                    dealer_card_1.config(image = dealer_new_card)
+                    dealer_card_1.image = dealer_new_card
+                    #DEALER WIN
+            else:  
+                if len(dealer_score) == 5:
+                    jack_title.config(text = "5 CARDS YOU LOSE")
+                    dealer_new_card = \
+                        resize_cards(f"Python/{dealer[0]}.png")
+                    #save card
+                    dealer_card_1.config(image = dealer_new_card)
+                    dealer_card_1.image = dealer_new_card
+                    gamefin()
+        if player == "player":
+            #if cards were just shuffled
+            #PLAYER WIN
+            if len(player_score) == 2:
+                    if player_score[0] + player_score[1] == 21:
+                        jack_title.config(text = "BLACK JACK YOU WIN")
+                        player_num += 1
+                        hit_button.config(state = "disabled")
+                        stand_button.config(state = "disabled")
+                        shuffle_button.config(bg = "#FAF0CA", 
+                                              state = "normal")
+                        dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                        #save card
+                        dealer_card_1.config(image = dealer_new_card)
+                        dealer_card_1.image = dealer_new_card
+                        #DEALER WIN
+            if sum(player_score) > 21:
+                jack_title.config(text = "ITS A BUST, YOU LOSE")
+                hit_button.config(state = "disabled")
+                stand_button.config(state = "disabled")
+                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                #save card
+                dealer_card_1.config(image = dealer_new_card)
+                dealer_card_1.image = dealer_new_card
+                gamefin()
+                #PLAYER WIN
+            elif sum(player_score) == 21:
+                    jack_title.config(text = "BLACK JACK YOU WIN")
+                    player_num += 1
+                    hit_button.config(state = "disabled")
+                    stand_button.config(state = "disabled")
+                    shuffle_button.config(bg = "#FAF0CA", 
+                                            state = "normal")
+                    dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                    #save card
+                    dealer_card_1.config(image = dealer_new_card)
+                    dealer_card_1.image = dealer_new_card  
+                    #PLAYER WIN  
+            else:  
+                if len(player_score) == 5:
+                    player_num += 1
+                    hit_button.config(state = "disabled")
+                    stand_button.config(state = "disabled")
+                    shuffle_button.config(bg = "#FAF0CA", state = "normal")
+                    jack_title.config(text = "5 CARDS PLAYER WINS")
+                    dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                    #save card
+                    dealer_card_1.config(image = dealer_new_card)
+                    dealer_card_1.image = dealer_new_card
+            
 
-            cardnum.config(text = f"Cards left in deck: {len(deck)}", 
-                           fg = "#0D3B66")
-        except:
-            cardnum.config(fg = "#FF0000", text = "There are no more cards"\
-                           " in the deck, please shuffle again")
+            
+
     #add cards into the deck
     shuffle()
-    dealing()
     #creating a deck with all the cards
-
-    hit_button = tk.Button(blackjack, text = "Hit", 
-                           font = pixel_font_buttons_TTT, command = dealing, 
-                           bg = "#0D3B66", fg = "#FAF0CA")
-    hit_button.pack(pady = 20, padx = 10)
-    shuffle_button = tk.Button(blackjack, text = "Shuffle", 
-                               font = pixel_font_buttons_TTT, 
-                               command = shuffle, bg = "#0D3B66",
-                          fg = "#FAF0CA")
-    shuffle_button.pack(pady = 20, anchor = "e")
-
 
     blackjack.mainloop()
 
@@ -1243,31 +1758,55 @@ def help():
                               font = pixel_font_buttons_small, 
                             fg = "#0D3B66", bg = "#FAF0CA", 
                             justify = "center")
+    def attributiontext():
+        nonlocal changing_label
+        changing_label.config(text = "Menu Images:\n"\
+                              "Drawn by the amazing Yuna Ko\n"\
+                                "\n Black Jack card image:\n"\
+                                    "from John Elders github account\n"\
+                                    "The back of the card image:\n"\
+                                    "is from Pixabay, by TJfree"\
+                                    "published on February 25, 2022",
+                              font = pixel_font_buttons_small, 
+                            fg = "#0D3B66", bg = "#FAF0CA", 
+                            justify = "center")
 
-    help_label = tk.Label(help, text = "What do you need help with?", font = pixel_font_buttons_hangman, 
+    help_label = tk.Label(help, text = "What do you need help with?", 
+                          font = pixel_font_buttons_hangman, 
                           fg = "#0D3B66", bg = "#FAF0CA")
-    changing_label = tk.Label(help, text = "Click the buttons below to get help with each game", 
-                             font = pixel_font_buttons_small, fg = "#0D3B66", bg = "#FAF0CA")
+    changing_label = tk.Label(help, 
+                              text = "Click the buttons below to get help"\
+                                  "with each game", 
+                             font = pixel_font_buttons_small, 
+                             fg = "#0D3B66", bg = "#FAF0CA")
     hangman_help_button = tk.Button(help, text = "Hangman help?", 
                                     command=hangman_help, 
                                       font = pixel_font_buttons_hangman, 
                                       fg = "#FAF0CA", bg = "#0D3B66", 
                                       relief = "flat", padx=25)
-    TTT_help_button = tk.Button(help, text = "Tic Tac Toe help?", 
+    TTT_help_button = tk.Button(help, text = "Super Tic Tac Toe help?", 
                                    command=TTT_help, 
                                      font = pixel_font_buttons_hangman, 
                                      fg = "#FAF0CA", bg = "#0D3B66", 
                                      relief = "flat")
     blackjack_help_button = tk.Button(help, text = "Black Jack help?", 
-                                   command=TTT_help, 
+                                   command=blackjack_help, 
                                      font = pixel_font_buttons_hangman, 
                                      fg = "#FAF0CA", bg = "#0D3B66", 
                                      relief = "flat", padx = 15)
+    attribution = tk.Button(help, text = "See Attribution", 
+                                   command=attributiontext, 
+                                     font = pixel_font_buttons_hangman, 
+                                     fg = "#FAF0CA", bg = "#0D3B66", 
+                                     relief = "flat", padx = 15)
+
     help_label.pack(pady = 10)
     changing_label.pack(pady = 10)
     TTT_help_button.pack(pady = 20, padx = 20)
     hangman_help_button.pack(pady = 20, padx = 20)
     blackjack_help_button.pack(pady = 20, padx = 20)
+    attribution.pack(pady = 20, padx = 20)
+
 
 
 
