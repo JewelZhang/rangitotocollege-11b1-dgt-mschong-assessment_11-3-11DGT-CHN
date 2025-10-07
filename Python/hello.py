@@ -534,6 +534,7 @@ def Stictactoe():
     TTT.title("Choose your gamemode")
     TTT.title("Tic Tac Toes")
     TTT.geometry("490x300")
+    TTT.resizable(False, False)
     TTT.configure(bg="#FAF0CA")  # The background color of the window
     TTT_title = tk.Label(
         TTT,
@@ -867,6 +868,7 @@ def Stictactoe():
         BTTT = tk.Toplevel(TTT)
         BTTT.title("Tic Tac Toes but you ARE lonely!")
         BTTT.geometry("805x875")
+        BTTT.resizable(False, False)  # stop the resizing of the window
         BTTT.configure(bg="#FAF0CA")  # The background color of the window
 
         current_player = "X"  # X is the current player
@@ -1337,7 +1339,7 @@ def blackjack():
     player_num = 0
     # I am using a tutorial by codemy.com for this blackjack game
     blackjack = tk.Toplevel(root)
-    blackjack.title("Memory Mania")
+    blackjack.title("BlackJack")
     blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
     blackjack.config(bg="#0D3B66")
