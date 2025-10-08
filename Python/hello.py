@@ -10,13 +10,20 @@ Have fun playing!!
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
+import pyglet
 from tkinter.font import Font  # So I can use fonts in the games and menu
 import random  # For hangman and blackjack
+import customtkinter
 
 root = tk.Tk()
 root.geometry("950x850")  # The size of the window
 root.resizable(False, False)  # stop the resizing of the window
 root.configure(bg="#FAF0CA")  # The background color of the window
+
+#pyglet.font.add_file('Python/VT323/VT323-Regular.ttf')
+#pixel_font=pyglet.font.load('VT323')
+
+customtkinter.FontManager.load_font("Python/VT323/VT323-Regular.ttf")
 
 pixel_font_title = Font(family="VT323", size=70)
 pixel_font_buttons = Font(family="VT323", size=30)
@@ -27,9 +34,10 @@ pixel_font_buttons_small = Font(family="VT323", size=15)
 scary_font_label = Font(family="Nosifer", size=20)
 
 Title = tk.Label(
-    root, text="Gamecompedium", font=(pixel_font_title), fg="#0D3B66",
+    root, text="Game compedium", font=("VT323", 70), fg="#0D3B66",
     bg="#FAF0CA"
-).grid(row=0, column=0, columnspan=3, pady=5, padx=210)
+)
+Title.grid(row=0, column=0, columnspan=3, pady=5, padx=210)
 # Stand in for the title, I willl change later
 
 scores = {}
