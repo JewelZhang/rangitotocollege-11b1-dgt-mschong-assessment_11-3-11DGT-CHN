@@ -24,6 +24,7 @@ root.configure(bg="#FAF0CA")  # The background color of the window
 #pixel_font=pyglet.font.load('VT323')
 
 customtkinter.FontManager.load_font("Python/VT323/VT323-Regular.ttf")
+customtkinter.FontManager.load_font("Python/Nosifer/Nosifer-Regular.ttf")
 
 pixel_font_title = Font(family="VT323", size=70)
 pixel_font_buttons = Font(family="VT323", size=30)
@@ -34,7 +35,7 @@ pixel_font_buttons_small = Font(family="VT323", size=15)
 scary_font_label = Font(family="Nosifer", size=20)
 
 Title = tk.Label(
-    root, text="Game compedium", font=("VT323", 70), fg="#0D3B66",
+    root, text="Game compedium", font=pixel_font_title, fg="#0D3B66",
     bg="#FAF0CA"
 )
 Title.grid(row=0, column=0, columnspan=3, pady=5, padx=210)
