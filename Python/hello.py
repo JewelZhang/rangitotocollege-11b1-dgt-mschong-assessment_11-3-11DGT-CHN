@@ -1428,7 +1428,7 @@ def blackjack():
         name_enter.pack()
         name_warning = tk.Label(
             sb_window,
-            text="Please enter a name under 7 letters",
+            text="Please enter an orginal name under 7 letters",
             fg="#0D3B66",
             bg="#FAF0CA",
             font=pixel_font_buttons_hangman,
@@ -1441,6 +1441,7 @@ def blackjack():
             # I used a tutorial by Tutorialspoint for the scroll bar
             value = name_enter.get()
             if len(value) <= 6 and value not in nums.keys():
+                shuffle_button.config(state="disabled")
                 confirmNamewin = tk.Toplevel(blackjack)
                 confirmNamewin.title("BlackJack scores")
                 confirmNamewin.geometry("400x800")
@@ -1559,7 +1560,11 @@ def blackjack():
         )
         GEscoreLabel.pack(padx=20, pady=5)
 
-        shuffle_button.config(text="Open Leaderboard", command=openLB)
+        shuffle_button.config(text="Open Leaderboard",
+                              bg="#FAF0CA",
+                              fg="#0D3B66",
+                              command=openLB,
+                              state="normal")
 
     # PLAYER GET CARD
     def player_hit():
