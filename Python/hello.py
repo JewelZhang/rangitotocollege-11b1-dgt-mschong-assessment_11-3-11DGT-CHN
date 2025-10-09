@@ -10,7 +10,6 @@ Have fun playing!!
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
-import pyglet
 from tkinter.font import Font  # So I can use fonts in the games and menu
 import random  # For hangman and blackjack
 import customtkinter
@@ -19,9 +18,6 @@ root = tk.Tk()
 root.geometry("950x850")  # The size of the window
 root.resizable(False, False)  # stop the resizing of the window
 root.configure(bg="#FAF0CA")  # The background color of the window
-
-#pyglet.font.add_file('Python/VT323/VT323-Regular.ttf')
-#pixel_font=pyglet.font.load('VT323')
 
 customtkinter.FontManager.load_font("Python/VT323/VT323-Regular.ttf")
 customtkinter.FontManager.load_font("Python/Nosifer/Nosifer-Regular.ttf")
@@ -203,6 +199,7 @@ def hangman():
                     "Click next word to continue playing"
                 )
                 # Changing the text to show they won
+                enter.config(state="disabled")
 
                 if difficulty == "easy":
                     score += 1
@@ -210,7 +207,6 @@ def hangman():
                     score += 2
                 elif difficulty == "hard":
                     score += 3
-                print(score)
 
         if guess not in word.lower() and guess not in letters_guessed:
 
@@ -245,31 +241,16 @@ def hangman():
             hangman.unbind("<Return>")
             # Unbinding the enter key so it cant be pressed
             # Unbinding the button so it cant be clicked
-            checkbutton.pack_forget()
             # I learnt this from the yt channel Tkinter.com
             # Disabling the button so the player can't keep losing lives
             letters.pack_forget()
             enter.pack_forget()
             # pack_forget removes the wiget from the window so the player
             # cant keep guessing after they lose
-            leaderboard = tk.Label(
-                hangman,
-                text="Do you want to add your " " score to the leaderboard?",
-                font=pixel_font_buttons_hangman,
-                bg="#FAF0CA",
-                fg="#0D3B66",
-            )
-            leaderboard.pack(pady=5)
 
-            seelb = tk.Button(
-                hangman,
-                command=scoreboard,
-                text="Open leaderboard",
-                font=pixel_font_buttons_hangman,
-                fg="#FAF0CA",
-                bg="#0D3B66",
-            )
-            seelb.pack(pady=5)
+            liveslabel.config(text="Do you want to add your\n" 
+                        "score to the leaderboard?", fg="#0D3B66")
+            checkbutton.config(command=scoreboard, text="Open Leaderboard")
 
     # CODE WOF CHECK HERE
 
@@ -294,6 +275,7 @@ def hangman():
             fg="#CC0000",
             bg="#FAF0CA",
         )
+        enter.config(state="normal")
 
         difficulty = random.choice(list(words))
         # Choosing a random difficulty first
@@ -351,7 +333,7 @@ def hangman():
         nameEnter.pack()
         name_warning = tk.Label(
             scoreboard_window,
-            text="Please enter a name under 7 letters",
+            text="Please enter an original name under 7 letters",
             fg="#0D3B66",
             bg="#FAF0CA",
             font=pixel_font_buttons_hangman,
@@ -361,8 +343,9 @@ def hangman():
         def get_name():
             """Get the name of the player"""
             # I used a tutorial by Tutorialspoint for the scroll bar
+            checkbutton.config(state="disabled")
             value = nameEnter.get()
-            if len(value) <= 6:
+            if len(value) <= 6 and value not in scores.keys():
                 confirmNamewin = tk.Toplevel(hangman)
                 confirmNamewin.title("Hangman scores")
                 confirmNamewin.geometry("400x800")
@@ -401,6 +384,11 @@ def hangman():
                 confirmNamewin.configure(bg="#FAF0CA")
                 scoreboard_window.destroy()
                 scores[value] = score
+                sortedscores = dict(sorted(scores.items(),
+                                      key=lambda item: item[1],
+                                      reverse=True))
+                #sorting the dictionary
+                
                 # save the scores to a dictionary with a name and score
                 title_score_UN = tk.Label(
                     content,
@@ -422,26 +410,27 @@ def hangman():
                 # putting them in a grid so they can stack like a leaderboard
                 line = 1
                 # The row the name and score are on
-                for i, r in scores.items():
-                    # putting the score and name in dict 
-                    # into labels so the player can see them
+
+                for i, r in sortedscores.items():
                     scorey = tk.Label(
-                        content,
-                        text=r,
-                        bg="#FAF0CA",
-                        fg="#0D3B66",
-                        font=pixel_font_labels,
-                    )
+                            content,
+                            text=r,
+                            bg="#FAF0CA",
+                            fg="#0D3B66",
+                            font=pixel_font_labels
+                            )
                     namey = tk.Label(
                         content,
                         text=i,
                         bg="#FAF0CA",
                         fg="#0D3B66",
-                        font=pixel_font_labels,
-                    )
-                    scorey.grid(row=line, column=1, padx=40, pady=5)
+                        font=pixel_font_labels
+                        )
                     namey.grid(row=line, column=0, padx=40, pady=5)
+                    scorey.grid(row=line, column=1, padx=40, pady=5)
                     line += 1
+
+
 
                     # make it enlarge into the window
                     confirmNamewin.columnconfigure(0, weight=1)
@@ -542,7 +531,7 @@ def Stictactoe():
     TTT = tk.Toplevel(root)
     TTT.title("Choose your gamemode")
     TTT.title("Tic Tac Toes")
-    TTT.geometry("490x300")
+    TTT.geometry("480x300")
     TTT.resizable(False, False)
     TTT.configure(bg="#FAF0CA")  # The background color of the window
     TTT_title = tk.Label(
@@ -1451,7 +1440,7 @@ def blackjack():
             nonlocal player_num
             # I used a tutorial by Tutorialspoint for the scroll bar
             value = name_enter.get()
-            if len(value) <= 6:
+            if len(value) <= 6 and value not in nums.keys():
                 confirmNamewin = tk.Toplevel(blackjack)
                 confirmNamewin.title("BlackJack scores")
                 confirmNamewin.geometry("400x800")
@@ -1459,6 +1448,9 @@ def blackjack():
                 confirmNamewin.grid()
 
                 nums[value] = player_num
+                sortednums = dict(sorted(nums.items(),
+                                      key=lambda item: item[1],
+                                      reverse=True))
 
                 scrollframe = tk.Frame(confirmNamewin, bg="#FAF0CA")
                 scrollframe.grid(row=0, column=0, sticky="nsew")
@@ -1513,7 +1505,7 @@ def blackjack():
                 # putting them in a grid so they can stack like a leaderboard
                 line = 1
                 # The row the name and score are on
-                for i, r in nums.items():
+                for i, r in sortednums.items():
                     # putting the score and name in dict into labels so the player
                     # can see them
                     scorey = tk.Label(
@@ -1554,7 +1546,6 @@ def blackjack():
         creating the leaderboard
         """
         hit_button.pack_forget()
-        shuffle_button.pack_forget()
         stand_button.pack_forget()
 
         GEscoreLabel = tk.Label(
@@ -1567,15 +1558,8 @@ def blackjack():
             bg="#0D3B66",
         )
         GEscoreLabel.pack(padx=20, pady=5)
-        lbButton = tk.Button(
-            button_frame,
-            text="Open leaderboard",
-            command=openLB,
-            font=pixel_font_buttons_hangman,
-            fg="#FAF0CA",
-            bg="#0D3B66",
-        )
-        lbButton.pack(padx=20, pady=5)
+
+        shuffle_button.config(text="Open Leaderboard", command=openLB)
 
     # PLAYER GET CARD
     def player_hit():
@@ -1746,8 +1730,11 @@ def blackjack():
                     fg="#FF0000",
                     text="There are no more cards" 
                     " in the deck, please shuffle again")
-        # check for blackjack
-        blackjack_score("dealer")
+        if len(dealer_score) <= 2:
+            # check for blackjack
+            blackjack_score("dealer")
+        else:
+            pass
 
     def stand():
         """Player ends their turn and dealer can now start theirs."""
@@ -1755,9 +1742,12 @@ def blackjack():
         stand_button.config(state="disabled")
         if sum(dealer_score) >= 16:
             blackjack_score("dealer")
-        while sum(dealer_score) < 16:
-            dealer_hit()
-        stand_win()
+        while True:
+            if sum(dealer_score) < 16:
+                dealer_hit()
+            else:
+                stand_win()
+                break
 
     # frame for buttons so they can be in a line
     button_frame = tk.Frame(blackjack, bg="#0D3B66")
@@ -1896,8 +1886,12 @@ def blackjack():
         nonlocal player_num
         # DEALER WIN
         if sum(dealer_score) < 21:
-            if len(dealer) == 5:
+            if len(dealer_score) == 5:
                 jack_title.config(text="5 CARDS YOU LOSE")
+                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                # save card
+                dealer_card_1.config(image=dealer_new_card)
+                dealer_card_1.image = dealer_new_card
                 gamefin()
             if sum(dealer_score) > sum(player_score):
                 jack_title.config(text="YOU LOST, "
@@ -1951,6 +1945,16 @@ def blackjack():
         If the player surpasses 21 they lose
         """
         nonlocal player_num
+        if sum(dealer_score) == 21 and sum(player_score) == 21:
+                jack_title.config(text="BLACK JACK YOU WIN")
+                player_num += 1
+                hit_button.config(state="disabled")
+                stand_button.config(state="disabled")
+                shuffle_button.config(bg="#FAF0CA", state="normal")
+                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+                # save card
+                dealer_card_1.config(image=dealer_new_card)
+                dealer_card_1.image = dealer_new_card
         if player == "dealer":
             # if cards were just chuffled
             # DEALER WIN
@@ -1965,40 +1969,9 @@ def blackjack():
                     dealer_card_1.config(image=dealer_new_card)
                     dealer_card_1.image = dealer_new_card
                     gamefin()
-                    # PLAYER WIN
-            elif sum(dealer_score) > 21:
-                jack_title.config(text="ITS A BUST, YOU WIN")
-                player_num += 1
-                hit_button.config(state="disabled")
-                stand_button.config(state="disabled")
-                shuffle_button.config(bg="#FAF0CA", state="normal")
-                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
-                # save card
-                dealer_card_1.config(image=dealer_new_card)
-                dealer_card_1.image = dealer_new_card
-                # DEALER WIN
-            else:
-                if len(dealer_score) == 5:
-                    jack_title.config(text="5 CARDS YOU LOSE")
-                    dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
-                    # save card
-                    dealer_card_1.config(image=dealer_new_card)
-                    dealer_card_1.image = dealer_new_card
-                    gamefin()
         if player == "player":
             # if cards were just shuffled
             # PLAYER WIN
-            if len(player_score) == 2:
-                if player_score[0] + player_score[1] == 21:
-                    jack_title.config(text="BLACK JACK YOU WIN")
-                    player_num += 1
-                    hit_button.config(state="disabled")
-                    stand_button.config(state="disabled")
-                    shuffle_button.config(bg="#FAF0CA", state="normal")
-                    dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
-                    # save card
-                    dealer_card_1.config(image=dealer_new_card)
-                    dealer_card_1.image = dealer_new_card
                     # DEALER WIN
             if sum(player_score) > 21:
                 jack_title.config(text="ITS A BUST, YOU LOSE")
