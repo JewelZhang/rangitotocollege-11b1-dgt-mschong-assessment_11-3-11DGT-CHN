@@ -15,7 +15,7 @@ import random  # For hangman and blackjack
 import customtkinter
 
 root = tk.Tk()
-root.geometry("950x850")  # The size of the window
+root.geometry("985x860")  # The size of the window
 root.resizable(False, False)  # stop the resizing of the window
 root.configure(bg="#FAF0CA")  # The background color of the window
 
@@ -34,7 +34,7 @@ Title = tk.Label(
     root, text="Game compedium", font=pixel_font_title, fg="#0D3B66",
     bg="#FAF0CA"
 )
-Title.grid(row=0, column=0, columnspan=3, pady=5, padx=210)
+Title.grid(row=0, column=0, columnspan=3, pady=0, padx=210)
 # Stand in for the title, I willl change later
 
 scores = {}
@@ -1340,7 +1340,7 @@ def blackjack():
     blackjack.title("BlackJack")
     blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
-    blackjack.config(bg="#0D3B66")
+    blackjack.config(bg="#272D2D")
 
     # resizing our images
     def resize_cards(card):
@@ -1365,20 +1365,20 @@ def blackjack():
         blackjack,
         text=f"Cards left in deck: 52",
         font=pixel_font_buttons_hangman,
-        fg="#FAF0CA",
-        bg="#0D3B66",
+        fg="#C1D37F",
+        bg="#272D2D",
     )
     jack_title = tk.Label(
         blackjack,
         text=f"Welcome to BlackJack",
         font=pixel_font_buttons_hangman,
-        fg="#FAF0CA",
-        bg="#0D3B66",
+        fg="#C1D37F",
+        bg="#272D2D",
     )
     jack_title.pack()
     cardnum.pack()
 
-    Mframe = tk.Frame(blackjack, bg="#FAF0CA")
+    Mframe = tk.Frame(blackjack, bg="#C1D37F")
     Mframe.pack(pady=5)
     # frame with text around border
 
@@ -1386,7 +1386,7 @@ def blackjack():
     Dframe = tk.LabelFrame(
         Mframe,
         text="Dealer",
-        bg="#FAF0CA",
+        bg="#C1D37F",
         fg="#0D3B66",
         bd=0,
         font=pixel_font_buttons_small,
@@ -1398,7 +1398,7 @@ def blackjack():
     Pframe = tk.LabelFrame(
         Mframe,
         text="Player",
-        bg="#FAF0CA",
+        bg="#C1D37F",
         fg="#0D3B66",
         bd=0,
         font=pixel_font_buttons_small,
@@ -1755,7 +1755,7 @@ def blackjack():
                 break
 
     # frame for buttons so they can be in a line
-    button_frame = tk.Frame(blackjack, bg="#0D3B66")
+    button_frame = tk.Frame(blackjack, bg="#6290C8")
     button_frame.pack(pady=20)
 
     hit_button = tk.Button(
@@ -1763,8 +1763,8 @@ def blackjack():
         text="Hit",
         font=pixel_font_buttons_hangman,
         command=player_hit,
-        bg="#FAF0CA",
-        fg="#0D3B66",
+        bg="#C1D37F",
+        fg="#272D2D",
         padx=30,
     )
     hit_button.pack(pady=10, padx=10, side="right")
@@ -1772,8 +1772,8 @@ def blackjack():
         button_frame,
         text="Stand",
         command=stand,
-        bg="#FAF0CA",
-        fg="#0D3B66",
+        bg="#C1D37F",
+        fg="#272D2D",
         font=pixel_font_buttons_hangman,
         padx=10,
     )
@@ -1781,28 +1781,28 @@ def blackjack():
 
     # putting cards into frames
     # five cards if player goes over they win
-    dealer_card_1 = tk.Label(Dframe, text="", bg="#FAF0CA")
-    player_card_1 = tk.Label(Pframe, text="", bg="#FAF0CA")
+    dealer_card_1 = tk.Label(Dframe, text="", bg="#C1D37F")
+    player_card_1 = tk.Label(Pframe, text="", bg="#C1D37F")
     dealer_card_1.grid(row=0, column=0, pady=20)
     player_card_1.grid(row=1, column=0, pady=20)
 
-    dealer_card_2 = tk.Label(Dframe, text="", bg="#FAF0CA")
-    player_card_2 = tk.Label(Pframe, text="", bg="#FAF0CA")
+    dealer_card_2 = tk.Label(Dframe, text="", bg="#C1D37F")
+    player_card_2 = tk.Label(Pframe, text="", bg="#C1D37F")
     dealer_card_2.grid(row=0, column=1, pady=20)
     player_card_2.grid(row=1, column=1, pady=20)
 
-    dealer_card_3 = tk.Label(Dframe, text="", bg="#FAF0CA")
-    player_card_3 = tk.Label(Pframe, text="", bg="#FAF0CA")
+    dealer_card_3 = tk.Label(Dframe, text="", bg="#C1D37F")
+    player_card_3 = tk.Label(Pframe, text="", bg="#C1D37F")
     dealer_card_3.grid(row=0, column=2, pady=20)
     player_card_3.grid(row=1, column=2, pady=20)
 
-    dealer_card_4 = tk.Label(Dframe, text="", bg="#FAF0CA")
-    player_card_4 = tk.Label(Pframe, text="", bg="#FAF0CA")
+    dealer_card_4 = tk.Label(Dframe, text="", bg="#C1D37F")
+    player_card_4 = tk.Label(Pframe, text="", bg="#C1D37F")
     dealer_card_4.grid(row=0, column=3, pady=20)
     player_card_4.grid(row=1, column=3, pady=20)
 
-    dealer_card_5 = tk.Label(Dframe, text="", bg="#FAF0CA")
-    player_card_5 = tk.Label(Pframe, text="", bg="#FAF0CA")
+    dealer_card_5 = tk.Label(Dframe, text="", bg="#C1D37F")
+    player_card_5 = tk.Label(Pframe, text="", bg="#C1D37F")
     dealer_card_5.grid(row=0, column=4, pady=20)
     player_card_5.grid(row=1, column=4, pady=20)
 
@@ -1898,7 +1898,7 @@ def blackjack():
                 dealer_card_1.config(image=dealer_new_card)
                 dealer_card_1.image = dealer_new_card
                 gamefin()
-            if sum(dealer_score) > sum(player_score):
+            elif sum(dealer_score) > sum(player_score):
                 jack_title.config(text="YOU LOST, "
                                   " DEALER HAS A HIGHER SCORE")
                 gamefin()
@@ -2154,11 +2154,14 @@ def help():
 
 root.title("Main Menu")
 
-hangman_image = Image.open("Python/hangyman.jpg").resize((270, 200))
+hangman_image = Image.open("Python/hangmanpic.png").resize((275, 275))
 hangman_image = ImageTk.PhotoImage(hangman_image)
 
-TTT_image = Image.open("Python/TTT.jpeg.jpeg").resize((300, 300))
+TTT_image = Image.open("Python/TTT.jpeg.jpeg").resize((275, 275))
 TTT_image = ImageTk.PhotoImage(TTT_image)
+
+blackjackbutton_image = Image.open("Python/blacjack.jpg").resize((275, 275))
+blackjackbutton_image = ImageTk.PhotoImage(blackjackbutton_image)
 
 help_button = tk.Button(
     root,
@@ -2176,7 +2179,7 @@ frame_hangman = tk.Frame(
     bg="#FAF0CA",
     borderwidth=0,
 )
-frame_hangman.grid(row=1, column=0, pady=40, padx=10)
+frame_hangman.grid(row=1, column=0, rowspan=2, pady=0, padx=10)
 hangman_button_image = tk.Button(
     frame_hangman,
     image=hangman_image,
@@ -2196,13 +2199,13 @@ hangman_button = tk.Button(
     bg="#0D3B66",
     borderwidth=0,
     padx=80,
-    pady=5,
+    pady=0,
 )
 hangman_button_image.pack()
 hangman_button.pack()
 
 frame_ttt = tk.Frame(root, bg="#FAF0CA", borderwidth=0)
-frame_ttt.grid(row=1, column=2, rowspan=2, pady=0, padx=0)
+frame_ttt.grid(row=1, column=2, rowspan=2, pady=0, padx=10)
 Stictactoe_image = tk.Button(
     frame_ttt,
     image=TTT_image,
@@ -2218,15 +2221,18 @@ Stictactoe_button = tk.Button(
     fg="#FAF0CA",
     bg="#0D3B66",
     borderwidth=0,
-    pady=5,
+    pady=0,
     padx=5,
 )
 Stictactoe_button.pack()
 
 blackjack_frame = tk.Frame(root, bg="#FAF0CA", borderwidth=0)
-blackjack_frame.grid(row=4, column=1, rowspan=2, pady=5, padx=10)
+blackjack_frame.grid(row=3, column=1, rowspan=2, pady=0, padx=10)
 blackjack_image = tk.Button(
-    blackjack_frame, image=hangman_image, command=blackjack, borderwidth=0
+    blackjack_frame,
+    image=blackjackbutton_image,
+    command=blackjack,
+    borderwidth=0
 )
 
 blackjack_button = tk.Button(
@@ -2237,8 +2243,8 @@ blackjack_button = tk.Button(
     fg="#FAF0CA",
     bg="#0D3B66",
     borderwidth=0,
-    padx=75,
-    pady=5,
+    padx=70,
+    pady=0,
 )
 blackjack_image.pack()
 blackjack_button.pack()
