@@ -261,9 +261,7 @@ def hangman():
         """
 
         nonlocal word
-
         nonlocal guessed
-
         nonlocal difficulty
 
         checkbutton.config(command=check, text="Check letter")
@@ -348,7 +346,7 @@ def hangman():
             if len(value) <= 6 and value not in scores.keys():
                 confirmNamewin = tk.Toplevel(hangman)
                 confirmNamewin.title("Hangman scores")
-                confirmNamewin.geometry("400x800")
+                confirmNamewin.geometry("400x600")
                 confirmNamewin.resizable(False, False)
                 confirmNamewin.grid()
 
@@ -1340,7 +1338,7 @@ def blackjack():
     blackjack.title("BlackJack")
     blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
-    blackjack.config(bg="#272D2D")
+    blackjack.config(bg="#2D2D4E")  #bg of window
 
     # resizing our images
     def resize_cards(card):
@@ -1365,20 +1363,20 @@ def blackjack():
         blackjack,
         text=f"Cards left in deck: 52",
         font=pixel_font_buttons_hangman,
-        fg="#C1D37F",
-        bg="#272D2D",
+        fg="#F0EFF4",
+        bg="#2D2D4E",
     )
     jack_title = tk.Label(
         blackjack,
         text=f"Welcome to BlackJack",
         font=pixel_font_buttons_hangman,
-        fg="#C1D37F",
-        bg="#272D2D",
+        fg="#F0EFF4",
+        bg="#2D2D4E",
     )
     jack_title.pack()
     cardnum.pack()
 
-    Mframe = tk.Frame(blackjack, bg="#C1D37F")
+    Mframe = tk.Frame(blackjack, bg="#346441")
     Mframe.pack(pady=5)
     # frame with text around border
 
@@ -1386,8 +1384,8 @@ def blackjack():
     Dframe = tk.LabelFrame(
         Mframe,
         text="Dealer",
-        bg="#C1D37F",
-        fg="#0D3B66",
+        bg="#346441",
+        fg="#F0EFF4",
         bd=0,
         font=pixel_font_buttons_small,
         pady=5,
@@ -1398,8 +1396,8 @@ def blackjack():
     Pframe = tk.LabelFrame(
         Mframe,
         text="Player",
-        bg="#C1D37F",
-        fg="#0D3B66",
+        bg="#346441",
+        fg="#F0EFF4",
         bd=0,
         font=pixel_font_buttons_small,
         pady=5,
@@ -1410,7 +1408,7 @@ def blackjack():
     def openLB():
         sb_window = tk.Toplevel(blackjack)
         sb_window.title("Hangman scores")
-        sb_window.geometry("500x800")
+        sb_window.geometry("500x500")
         sb_window.resizable(False, False)
         # stop the resizing of the window
         sb_window.configure(bg="#FAF0CA")
@@ -1583,7 +1581,7 @@ def blackjack():
                 # give card to player
                 player.append(player_card)
                 cardnum.config(text=f"Cards left in deck: {len(deck)}",
-                               fg="#FAF0CA")
+                               fg="#F0EFF4")
                 # appending the value of the card too
                 # stripping the text from the card value and making it only num
                 # Using split and spliting it from the first _ and then int()
@@ -1755,7 +1753,7 @@ def blackjack():
                 break
 
     # frame for buttons so they can be in a line
-    button_frame = tk.Frame(blackjack, bg="#6290C8")
+    button_frame = tk.Frame(blackjack, bg="#2D2D4E")
     button_frame.pack(pady=20)
 
     hit_button = tk.Button(
@@ -1763,8 +1761,8 @@ def blackjack():
         text="Hit",
         font=pixel_font_buttons_hangman,
         command=player_hit,
-        bg="#C1D37F",
-        fg="#272D2D",
+        bg="#F0EFF4",
+        fg="#21452B",
         padx=30,
     )
     hit_button.pack(pady=10, padx=10, side="right")
@@ -1772,8 +1770,8 @@ def blackjack():
         button_frame,
         text="Stand",
         command=stand,
-        bg="#C1D37F",
-        fg="#272D2D",
+        bg="#F0EFF4",
+        fg="#21452B",
         font=pixel_font_buttons_hangman,
         padx=10,
     )
@@ -1781,28 +1779,28 @@ def blackjack():
 
     # putting cards into frames
     # five cards if player goes over they win
-    dealer_card_1 = tk.Label(Dframe, text="", bg="#C1D37F")
-    player_card_1 = tk.Label(Pframe, text="", bg="#C1D37F")
+    dealer_card_1 = tk.Label(Dframe, text="", bg="#346441")
+    player_card_1 = tk.Label(Pframe, text="", bg="#346441")
     dealer_card_1.grid(row=0, column=0, pady=20)
     player_card_1.grid(row=1, column=0, pady=20)
 
-    dealer_card_2 = tk.Label(Dframe, text="", bg="#C1D37F")
-    player_card_2 = tk.Label(Pframe, text="", bg="#C1D37F")
+    dealer_card_2 = tk.Label(Dframe, text="", bg="#346441")
+    player_card_2 = tk.Label(Pframe, text="", bg="#346441")
     dealer_card_2.grid(row=0, column=1, pady=20)
     player_card_2.grid(row=1, column=1, pady=20)
 
-    dealer_card_3 = tk.Label(Dframe, text="", bg="#C1D37F")
-    player_card_3 = tk.Label(Pframe, text="", bg="#C1D37F")
+    dealer_card_3 = tk.Label(Dframe, text="", bg="#346441")
+    player_card_3 = tk.Label(Pframe, text="", bg="#346441")
     dealer_card_3.grid(row=0, column=2, pady=20)
     player_card_3.grid(row=1, column=2, pady=20)
 
-    dealer_card_4 = tk.Label(Dframe, text="", bg="#C1D37F")
-    player_card_4 = tk.Label(Pframe, text="", bg="#C1D37F")
+    dealer_card_4 = tk.Label(Dframe, text="", bg="#346441")
+    player_card_4 = tk.Label(Pframe, text="", bg="#346441")
     dealer_card_4.grid(row=0, column=3, pady=20)
     player_card_4.grid(row=1, column=3, pady=20)
 
-    dealer_card_5 = tk.Label(Dframe, text="", bg="#C1D37F")
-    player_card_5 = tk.Label(Pframe, text="", bg="#C1D37F")
+    dealer_card_5 = tk.Label(Dframe, text="", bg="#346441")
+    player_card_5 = tk.Label(Pframe, text="", bg="#346441")
     dealer_card_5.grid(row=0, column=4, pady=20)
     player_card_5.grid(row=1, column=4, pady=20)
 
@@ -1960,7 +1958,7 @@ def blackjack():
                 # save card
                 dealer_card_1.config(image=dealer_new_card)
                 dealer_card_1.image = dealer_new_card
-        if player == "dealer":
+        elif player == "dealer":
             # if cards were just chuffled
             # DEALER WIN
             if len(dealer_score) == 2:
@@ -1974,7 +1972,7 @@ def blackjack():
                     dealer_card_1.config(image=dealer_new_card)
                     dealer_card_1.image = dealer_new_card
                     gamefin()
-        if player == "player":
+        elif player == "player":
             # if cards were just shuffled
             # PLAYER WIN
                     # DEALER WIN
