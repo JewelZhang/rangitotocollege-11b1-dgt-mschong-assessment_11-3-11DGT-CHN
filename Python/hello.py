@@ -105,6 +105,7 @@ def hangman():
 
         """Going back to the main menu."""
         root.lift()
+        root.deiconify()
 
     back_button = tk.Button(hangman, text="See\nmenu",
     command=back_to_menu,
@@ -575,12 +576,16 @@ def Stictactoe():
         # I used codingspots ultimate tictactoe video 
         # for the nested list board
 
+        heading_frame = tk.Frame(FTTT, bg="#FAF0CA")
+        heading_frame.grid(row=0, column=0, columnspan=5)
+
         def back_to_menu():
 
             """Going back to the main menu."""
             root.lift()
+            root.deiconify()
 
-        back_button = tk.Button(FTTT, text="See\nmenu",
+        back_button = tk.Button(heading_frame, text="See\nmenu",
         command=back_to_menu,
         font=pixel_font_buttons_small,
         fg="#FAF0CA",
@@ -588,10 +593,11 @@ def Stictactoe():
         borderwidth=0,
         padx=10,
         pady=0)
-        back_button.grid(row=0, column=1, pady=10, padx=5)
+        back_button.grid(row=0, column=3, columnspan=2, 
+                         pady=10, padx=5, sticky="ne")
 
         FTTT_title = tk.Label(
-            FTTT,
+            heading_frame,
             text="Super Tic Tac Toe with a buddy!!",
             font=pixel_font_labels,
             fg="#0D3B66",
@@ -916,8 +922,28 @@ def Stictactoe():
 
         game_finished = False
 
+        heading_frame = tk.Frame(BTTT, bg="#FAF0CA")
+        heading_frame.grid(row=0, column=0, columnspan=5)
+
+        def back_to_menu():
+
+            """Going back to the main menu."""
+            root.lift()
+            root.deiconify()
+
+        back_button = tk.Button(heading_frame, text="See\nmenu",
+        command=back_to_menu,
+        font=pixel_font_buttons_small,
+        fg="#FAF0CA",
+        bg="#0D3B66",
+        borderwidth=0,
+        padx=10,
+        pady=0)
+        back_button.grid(row=0, column=3, columnspan=2, 
+                         pady=10, padx=5, sticky="ne")
+
         STTT_title = tk.Label(
-            BTTT,
+            heading_frame,
             text="Super Tic Tac Toe, with a bot!",
             font=pixel_font_labels,
             fg="#0D3B66",
@@ -1369,6 +1395,22 @@ def blackjack():
     blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
     blackjack.config(bg="#2D2D4E")  #bg of window
+
+    def back_to_menu():
+
+            """Going back to the main menu."""
+            root.lift()
+            root.deiconify()
+
+    back_button = tk.Button(blackjack, text="See\nmenu",
+    command=back_to_menu,
+    font=pixel_font_buttons_small,
+    fg="#0D3B66",
+    bg="#FAF0CA",
+    borderwidth=0,
+    padx=10,
+    pady=0)
+    back_button.pack(pady=10, padx=5, anchor="ne", side="right")
 
     # resizing our images
     def resize_cards(card):
