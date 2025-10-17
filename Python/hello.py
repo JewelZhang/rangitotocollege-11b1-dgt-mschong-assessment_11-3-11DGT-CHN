@@ -15,7 +15,7 @@ import random  # For hangman and blackjack
 import customtkinter
 
 root = tk.Tk()
-root.geometry("985x860")  # The size of the window
+root.geometry("955x860")  # The size of the window
 root.resizable(False, False)  # stop the resizing of the window
 root.configure(bg="#FAF0CA")  # The background color of the window
 
@@ -97,9 +97,24 @@ def hangman():
 
     hangman = tk.Toplevel(root)  # A new window for hangman
     hangman.title("Hangman")
-    hangman.geometry("800x900")
+    hangman.geometry("800x850")
     hangman.resizable(False, False)  # stop the resizing of the window
     hangman.configure(bg="#FAF0CA")  # The background color of the window
+
+    def back_to_menu():
+
+        """Going back to the main menu."""
+        root.lift()
+
+    back_button = tk.Button(hangman, text="See\nmenu",
+    command=back_to_menu,
+    font=pixel_font_buttons_small,
+    fg="#FAF0CA",
+    bg="#0D3B66",
+    borderwidth=0,
+    padx=10,
+    pady=0)
+    back_button.pack(pady=10, padx=5, side="right", anchor="n")
 
     head = tk.Label(
         hangman,
@@ -133,7 +148,7 @@ def hangman():
         hangman,
         text="Wrong Letters/Words guessed: ",
         wraplength=700,
-        font=pixel_font_buttons,
+        font=pixel_font_buttons_hangman,
         bg="#FAF0CA",
     )
     # To show the user what letters they have guessed wrong
@@ -142,7 +157,7 @@ def hangman():
     liveslabel = tk.Label(
         hangman,
         text=f"Lives left until the man gets " f"hanged: {lives}",
-        font=pixel_font_buttons,
+        font=pixel_font_buttons_hangman,
         bg="#FAF0CA",
     )
     liveslabel.pack(pady=5)
@@ -559,6 +574,21 @@ def Stictactoe():
         # I modified it to make it super
         # I used codingspots ultimate tictactoe video 
         # for the nested list board
+
+        def back_to_menu():
+
+            """Going back to the main menu."""
+            root.lift()
+
+        back_button = tk.Button(FTTT, text="See\nmenu",
+        command=back_to_menu,
+        font=pixel_font_buttons_small,
+        fg="#FAF0CA",
+        bg="#0D3B66",
+        borderwidth=0,
+        padx=10,
+        pady=0)
+        back_button.grid(row=0, column=1, pady=10, padx=5)
 
         FTTT_title = tk.Label(
             FTTT,
@@ -1949,6 +1979,8 @@ def blackjack():
         """
         nonlocal player_num
         if sum(dealer_score) == 21 and sum(player_score) == 21:
+                # If both the players have blackjack
+                # let player win bc im nice:)
                 jack_title.config(text="BLACK JACK YOU WIN")
                 player_num += 1
                 hit_button.config(state="disabled")
@@ -2170,7 +2202,7 @@ help_button = tk.Button(
     bg="#0D3B66",
     height=1,
     width=1,
-).grid(row=0, column=2, sticky="ne", padx=10, pady=10)
+).grid(row=0, column=2, sticky="ne", padx=0, pady=10)
 
 frame_hangman = tk.Frame(
     root,
@@ -2203,7 +2235,7 @@ hangman_button_image.pack()
 hangman_button.pack()
 
 frame_ttt = tk.Frame(root, bg="#FAF0CA", borderwidth=0)
-frame_ttt.grid(row=1, column=2, rowspan=2, pady=0, padx=10)
+frame_ttt.grid(row=1, column=2, rowspan=2, pady=0, padx=0)
 Stictactoe_image = tk.Button(
     frame_ttt,
     image=TTT_image,
@@ -2220,7 +2252,7 @@ Stictactoe_button = tk.Button(
     bg="#0D3B66",
     borderwidth=0,
     pady=0,
-    padx=5,
+    padx=0,
 )
 Stictactoe_button.pack()
 
