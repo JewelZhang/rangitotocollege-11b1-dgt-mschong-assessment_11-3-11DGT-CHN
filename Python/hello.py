@@ -1450,9 +1450,9 @@ def blackjack():
 
     Mframe = tk.Frame(blackjack, bg="#346441")
     Mframe.pack(pady=5)
-    # frame with text around border
 
     # where cards will be displayed
+    # frame with text around border
     Dframe = tk.LabelFrame(
         Mframe,
         text="Dealer",
@@ -2129,7 +2129,27 @@ def help():
     def TTT_help():
         nonlocal changing_label
         changing_label.config(
-            text="sdlkhflskdjf",
+            text="Super Tic Tac Toe is like regular Tic Tac Toe," \
+                " but with 81 squares instead of 9 squares. \n" \
+            "The board is split into 9 subboards, with " \
+                "9 squares inide it, \n" \
+            "which can be played like a regular Tic Tac Toe board. \n" \
+            "But, the button you play in each subboard will correspond to\n" \
+            " the next subboard your opponent will then play in \n" \
+            "so make sure you choose wisely about where you move next! \n" \
+            "But, if you play in a button that corresponds to a \n" \
+            "already won or tied subboard your opponent can go anywhere, \n" \
+            "but the opposite can also happen. \n" \
+            "The subboard you will be allowed to play in will be"\
+                  " highlighted in a dark blue colour \n" \
+            " once the whole board turns dark blue you"\
+                  "can go anywhere you want. \n" \
+            "Once you win a subboard it will change into your"
+              "corresponding colour, \n" \
+            "blue for “O”s and red of “X”s. \n" \
+            "You will win the entire game when you have won three" 
+            "subboards in a row.\n" \
+            "Feel free to play with a friend or the bot!!",
             font=pixel_font_buttons_small,
             fg="#0D3B66",
             bg="#FAF0CA",
