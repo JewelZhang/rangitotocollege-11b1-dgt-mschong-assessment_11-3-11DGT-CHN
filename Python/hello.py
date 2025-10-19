@@ -1394,7 +1394,7 @@ def blackjack():
     blackjack.title("BlackJack")
     blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
-    blackjack.config(bg="#2D2D4E")  #bg of window
+    blackjack.config(bg="#0D3B66")  #bg of window
 
     def back_to_menu():
 
@@ -1435,20 +1435,20 @@ def blackjack():
         blackjack,
         text=f"Cards left in deck: 52",
         font=pixel_font_buttons_hangman,
-        fg="#F0EFF4",
-        bg="#2D2D4E",
+        fg="#FAF0CA",
+        bg="#0D3B66",
     )
     jack_title = tk.Label(
         blackjack,
         text=f"Welcome to BlackJack",
         font=pixel_font_buttons_hangman,
-        fg="#F0EFF4",
-        bg="#2D2D4E",
+        fg="#FAF0CA",
+        bg="#0D3B66",
     )
     jack_title.pack()
     cardnum.pack()
 
-    Mframe = tk.Frame(blackjack, bg="#346441")
+    Mframe = tk.Frame(blackjack, bg="#FAF0CA")
     Mframe.pack(pady=5)
 
     # where cards will be displayed
@@ -1456,8 +1456,8 @@ def blackjack():
     Dframe = tk.LabelFrame(
         Mframe,
         text="Dealer",
-        bg="#346441",
-        fg="#F0EFF4",
+        bg="#FAF0CA",
+        fg="#0D3B66",
         bd=0,
         font=pixel_font_buttons_small,
         pady=5,
@@ -1468,8 +1468,8 @@ def blackjack():
     Pframe = tk.LabelFrame(
         Mframe,
         text="Player",
-        bg="#346441",
-        fg="#F0EFF4",
+        bg="#FAF0CA",
+        fg="#0D3B66",
         bd=0,
         font=pixel_font_buttons_small,
         pady=5,
@@ -1653,7 +1653,7 @@ def blackjack():
                 # give card to player
                 player.append(player_card)
                 cardnum.config(text=f"Cards left in deck: {len(deck)}",
-                               fg="#F0EFF4")
+                               fg="#FAF0CA")
                 # appending the value of the card too
                 # stripping the text from the card value and making it only num
                 # Using split and spliting it from the first _ and then int()
@@ -1717,7 +1717,8 @@ def blackjack():
             except:
                 cardnum.config(
                     fg="#FF0000",
-                    text="There are no more" " cards in the deck, please shuffle again",
+                    text="There are no more" " cards in the deck,"
+                      "please shuffle again",
                 )
             blackjack_score("player")
 
@@ -1736,7 +1737,8 @@ def blackjack():
                 # give card to dealer
                 dealer.append(dealer_card)
                 # appending the value of the card too
-                # stripping the text from the card value and making it only num
+                # stripping the text from the 
+                # card value and making it only num
                 # Using split and spliting it from the first _ and then int()
                 dvalue = int(dealer_card.split("_", 1)[0])
                 if dvalue == 14:
@@ -1825,7 +1827,7 @@ def blackjack():
                 break
 
     # frame for buttons so they can be in a line
-    button_frame = tk.Frame(blackjack, bg="#2D2D4E")
+    button_frame = tk.Frame(blackjack, bg="#0D3B66")
     button_frame.pack(pady=20)
 
     hit_button = tk.Button(
@@ -1833,46 +1835,48 @@ def blackjack():
         text="Hit",
         font=pixel_font_buttons_hangman,
         command=player_hit,
-        bg="#F0EFF4",
-        fg="#21452B",
+        bg="#FAF0CA",
+        fg="#0D3B66",
         padx=30,
+        relief="flat",
     )
     hit_button.pack(pady=10, padx=10, side="right")
     stand_button = tk.Button(
         button_frame,
         text="Stand",
         command=stand,
-        bg="#F0EFF4",
-        fg="#21452B",
+        bg="#FAF0CA",
+        fg="#0D3B66",
         font=pixel_font_buttons_hangman,
         padx=10,
+        relief="flat",
     )
     stand_button.pack(pady=10, padx=10, side="left")
 
     # putting cards into frames
     # five cards if player goes over they win
-    dealer_card_1 = tk.Label(Dframe, text="", bg="#346441")
-    player_card_1 = tk.Label(Pframe, text="", bg="#346441")
+    dealer_card_1 = tk.Label(Dframe, text="", bg="#FAF0CA")
+    player_card_1 = tk.Label(Pframe, text="", bg="#FAF0CA")
     dealer_card_1.grid(row=0, column=0, pady=20)
     player_card_1.grid(row=1, column=0, pady=20)
 
-    dealer_card_2 = tk.Label(Dframe, text="", bg="#346441")
-    player_card_2 = tk.Label(Pframe, text="", bg="#346441")
+    dealer_card_2 = tk.Label(Dframe, text="", bg="#FAF0CA")
+    player_card_2 = tk.Label(Pframe, text="", bg="#FAF0CA")
     dealer_card_2.grid(row=0, column=1, pady=20)
     player_card_2.grid(row=1, column=1, pady=20)
 
-    dealer_card_3 = tk.Label(Dframe, text="", bg="#346441")
-    player_card_3 = tk.Label(Pframe, text="", bg="#346441")
+    dealer_card_3 = tk.Label(Dframe, text="", bg="#FAF0CA")
+    player_card_3 = tk.Label(Pframe, text="", bg="#FAF0CA")
     dealer_card_3.grid(row=0, column=2, pady=20)
     player_card_3.grid(row=1, column=2, pady=20)
 
-    dealer_card_4 = tk.Label(Dframe, text="", bg="#346441")
-    player_card_4 = tk.Label(Pframe, text="", bg="#346441")
+    dealer_card_4 = tk.Label(Dframe, text="", bg="#FAF0CA")
+    player_card_4 = tk.Label(Pframe, text="", bg="#FAF0CA")
     dealer_card_4.grid(row=0, column=3, pady=20)
     player_card_4.grid(row=1, column=3, pady=20)
 
-    dealer_card_5 = tk.Label(Dframe, text="", bg="#346441")
-    player_card_5 = tk.Label(Pframe, text="", bg="#346441")
+    dealer_card_5 = tk.Label(Dframe, text="", bg="#FAF0CA")
+    player_card_5 = tk.Label(Pframe, text="", bg="#FAF0CA")
     dealer_card_5.grid(row=0, column=4, pady=20)
     player_card_5.grid(row=1, column=4, pady=20)
 
@@ -2129,8 +2133,8 @@ def help():
     def TTT_help():
         nonlocal changing_label
         changing_label.config(
-            text="Super Tic Tac Toe is like regular Tic Tac Toe," \
-                " but with 81 squares instead of 9 squares. \n" \
+            text="Super Tic Tac Toe is like regular Tic Tac Toe,"
+            "\n but with 81 squares instead of 9 squares.\n" \
             "The board is split into 9 subboards, with " \
                 "9 squares inide it, \n" \
             "which can be played like a regular Tic Tac Toe board. \n" \
@@ -2159,7 +2163,30 @@ def help():
     def blackjack_help():
         nonlocal changing_label
         changing_label.config(
-            text="sdlkhflskdjf",
+            text="Blackjack is a card game that uses a poker card deck, "
+              "excluding jokers.\n" \
+            "Each card has its own values with number cards having their " 
+            "value be their number, \n" \
+            "Ace being 11 or 1 and face cards having a value of 10.\n" \
+            "You will have a total score which is all the values of your "
+              "cards added together.\n" \
+            "Your goal is to get as close to 21 as possible "
+              "without going over. \n" \
+            "You are trying to outscore the dealer who has the same "
+              "goal as you.\n" \
+            "You start with 2 cards and can pick up to 5 cards.\n" \
+            "If you reach 5 cards without going over 21 or get a score of "
+              "exactly 21 cards \n"
+            "or beat the dealer without going over 21 or the dealer goes "
+              "over 21, you win.\n" \
+            "Once you are finished picking up cards you can press\n" \
+            " the stand button and allow the dealer to pick up cards.\n" \
+            "However if you go over a score of 21 or have a lower score "
+              "than the dealer, \n" \
+            "You Lose and have to play again.\n" \
+            "Each round you win consecutively will give you a point, \n" \
+            "your goal is get the most points and therefore the highest "
+              "place on the leaderboard.",
             font=pixel_font_buttons_small,
             fg="#0D3B66",
             bg="#FAF0CA",
