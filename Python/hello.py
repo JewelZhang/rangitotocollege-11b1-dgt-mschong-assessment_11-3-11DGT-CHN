@@ -39,6 +39,7 @@ Title.grid(row=0, column=0, columnspan=3, pady=0, padx=210)
 
 scores = {}
 
+
 def hangman():
     """Hangman game.
 
@@ -102,19 +103,17 @@ def hangman():
     hangman.configure(bg="#FAF0CA")  # The background color of the window
 
     def back_to_menu():
-
-        """Going back to the main menu."""
         root.lift()
         root.deiconify()
 
     back_button = tk.Button(hangman, text="See\nmenu",
-    command=back_to_menu,
-    font=pixel_font_buttons_small,
-    fg="#FAF0CA",
-    bg="#0D3B66",
-    borderwidth=0,
-    padx=10,
-    pady=0)
+                            command=back_to_menu,
+                            font=pixel_font_buttons_small,
+                            fg="#FAF0CA",
+                            bg="#0D3B66",
+                            borderwidth=0,
+                            padx=10,
+                            pady=0)
     back_button.pack(pady=10, padx=5, side="right", anchor="n")
 
     head = tk.Label(
@@ -165,7 +164,6 @@ def hangman():
 
     def check(event=None):
         """To check if the user guessed a letter in the word."""
-
         nonlocal lives  # Accessing lives outside the function
         nonlocal guessed
         nonlocal score
@@ -228,7 +226,7 @@ def hangman():
 
             lives = lives - 1
 
-            liveslabel.config(text=f"Lives left until the man" 
+            liveslabel.config(text=f"Lives left until the man"
                               f" gets hanged: {lives}")
 
             if guess not in letters_guessed:
@@ -237,7 +235,8 @@ def hangman():
                 # Adding the wrong guess to the list
 
                 letters.config(
-                    text=f"Wrong Letters/Words guessed:" f"{', '.join(letters_guessed)}"
+                    text=f"Wrong Letters/Words guessed:"
+                    f"{', '.join(letters_guessed)}"
                 )
                 # Showing the user what they guessed wrong
 
@@ -264,8 +263,8 @@ def hangman():
             # pack_forget removes the wiget from the window so the player
             # cant keep guessing after they lose
 
-            liveslabel.config(text="Do you want to add your\n" 
-                        "score to the leaderboard?", fg="#0D3B66")
+            liveslabel.config(text="Do you want to add your\n"
+                              "score to the leaderboard?", fg="#0D3B66")
             checkbutton.config(command=scoreboard, text="Open Leaderboard")
 
     # CODE WOF CHECK HERE
@@ -399,10 +398,9 @@ def hangman():
                 scoreboard_window.destroy()
                 scores[value] = score
                 sortedscores = dict(sorted(scores.items(),
-                                      key=lambda item: item[1],
-                                      reverse=True))
-                #sorting the dictionary
-                
+                                           key=lambda item: item[1],
+                                           reverse=True))
+                # sorting the dictionary
                 # save the scores to a dictionary with a name and score
                 title_score_UN = tk.Label(
                     content,
@@ -443,8 +441,6 @@ def hangman():
                     namey.grid(row=line, column=0, padx=40, pady=5)
                     scorey.grid(row=line, column=1, padx=40, pady=5)
                     line += 1
-
-
 
                     # make it enlarge into the window
                     confirmNamewin.columnconfigure(0, weight=1)
@@ -559,7 +555,7 @@ def Stictactoe():
 
     def Stictactoe_friend():
         """Play Super Tic Tac Toe against a friend.
-        
+
         The player changes each time the player makes a move and the buttons
         will change accordingly
         """
@@ -571,11 +567,10 @@ def Stictactoe():
         FTTT.resizable(False, False)  # stop the resizing of the window
         FTTT.configure(bg="#FAF0CA")  # The background color of the window
         current_player = "X"  # X is the current player
-        # I am using a tutorial by Alina Chudnova but 
+        # I am using a tutorial by Alina Chudnova but
         # I modified it to make it super
-        # I used codingspots ultimate tictactoe video 
+        # I used codingspots ultimate tictactoe video
         # for the nested list board
-
         heading_frame = tk.Frame(FTTT, bg="#FAF0CA")
         heading_frame.grid(row=0, column=0, columnspan=5)
 
@@ -586,16 +581,15 @@ def Stictactoe():
             root.deiconify()
 
         back_button = tk.Button(heading_frame, text="See\nmenu",
-        command=back_to_menu,
-        font=pixel_font_buttons_small,
-        fg="#FAF0CA",
-        bg="#0D3B66",
-        borderwidth=0,
-        padx=10,
-        pady=0)
-        back_button.grid(row=0, column=3, columnspan=2, 
+                                command=back_to_menu,
+                                font=pixel_font_buttons_small,
+                                fg="#FAF0CA",
+                                bg="#0D3B66",
+                                borderwidth=0,
+                                padx=10,
+                                pady=0)
+        back_button.grid(row=0, column=3, columnspan=2,
                          pady=10, padx=5, sticky="ne")
-
         FTTT_title = tk.Label(
             heading_frame,
             text="Super Tic Tac Toe with a buddy!!",
@@ -627,9 +621,9 @@ def Stictactoe():
             nonlocal allowed_frame_coords_x
             nonlocal allowed_frame_coords_y
             nonlocal subboard_winner
-            # The the mainrow maincol determines which frame 
+            # The the mainrow maincol determines which frame
             # the button picked is
-            # The subrow subcol determines which button inside the 
+            # The subrow subcol determines which button inside the
             # frame was clicked
             if (
                 allowed_frame_coords_x == ""
@@ -846,7 +840,7 @@ def Stictactoe():
                 """
                 Creating the frame the buttons are gonna go inside
                 And then putting the frame into a grid structure
-                then add that to a nested list that stores it 
+                then add that to a nested list that stores it
                 and lets us edit exact frames through coords
                 """
                 button_subboard = []
@@ -865,33 +859,35 @@ def Stictactoe():
                             height=1,
                             borderwidth=0,
                             bg="#F4D35E",
-                            command=lambda d=d, r=r, j=j, k=k: make_move(d, r, j, k),
+                            command=lambda d=d, r=r, j=j, k=k: make_move(d, r,
+                                                                         j, k)
                         )
                         # providing numbers for the make move function
-                        # when we make a move we take into consideration 
+                        # when we make a move we take into consideration
                         # the subboard and button pressed
                         # this is so we know which button was pressed
                         """Button coords.
 
                         The first 2, D and R or m(main)row and m(main)col
-                        determine the frame the button is on and the second 2 
-                        subrow and subcol determine the coords of 
+                        determine the frame the button is on and the second 2
+                        subrow and subcol determine the coords of
                         the button inside the frame.
                         """
                         button.grid(row=j, column=k, padx=5, pady=5)
-                        # Place the buttons in a grid, the padding is the lines
+                        # Place the buttons in a grid, the padding is
+                        # the lines
                         buttons_row.append(button)
                         # Adding the button to a row
                     button_subboard.append(buttons_row)
                     # Adding the row to a 3x3 grid
                 buttons[d][r] = button_subboard
-                # changing the "" 
+                # changing the ""
                 # from the nested list into our button 3x3 grid
 
     def Stictactoe_bot():
         """A bot for Super Tic Tac Toe.
-        
-        This is a bot that will play Super Tic Tac Toe with you however it 
+
+        This is a bot that will play Super Tic Tac Toe with you however it
         is a completely random bot that will loop through coordinates until
         it finds a free button.
         """
@@ -904,10 +900,10 @@ def Stictactoe():
         BTTT.configure(bg="#FAF0CA")  # The background color of the window
 
         current_player = "X"  # X is the current player
-        # I'm using a tutorial by Alina Chudnova 
+        # I'm using a tutorial by Alina Chudnova
         # but I modified it to make it super
-        # I used codingspots ultimate tictactoe video 
-        # for the nested list board
+        # I used codingspots ultimate tictactoe video
+        # for some ideas
 
         # Giving our board a value
         board = [
@@ -932,14 +928,14 @@ def Stictactoe():
             root.deiconify()
 
         back_button = tk.Button(heading_frame, text="See\nmenu",
-        command=back_to_menu,
-        font=pixel_font_buttons_small,
-        fg="#FAF0CA",
-        bg="#0D3B66",
-        borderwidth=0,
-        padx=10,
-        pady=0)
-        back_button.grid(row=0, column=3, columnspan=2, 
+                                command=back_to_menu,
+                                font=pixel_font_buttons_small,
+                                fg="#FAF0CA",
+                                bg="#0D3B66",
+                                borderwidth=0,
+                                padx=10,
+                                pady=0)
+        back_button.grid(row=0, column=3, columnspan=2,
                          pady=10, padx=5, sticky="ne")
 
         STTT_title = tk.Label(
@@ -971,7 +967,7 @@ def Stictactoe():
                 """
                 Creating the frame the buttons are gonna go inside
                 And then putting the frame into a grid structure
-                then add that to a nested list that stores it 
+                then add that to a nested list that stores it
                 and lets us edit exact frames through coords
                 """
                 button_subboard = []
@@ -989,18 +985,19 @@ def Stictactoe():
                             height=1,
                             borderwidth=0,
                             bg="#F4D35E",
-                            command=lambda d=d, r=r, j=j, k=k: make_move(d, r, j, k),
+                            command=lambda d=d, r=r, j=j, k=k: make_move(d, r,
+                                                                         j, k)
                         )
                         # providing numbers for the make move function
-                        # when we make a move we take into consideration the 
+                        # when we make a move we take into consideration the
                         # subboard and button pressed
                         # this is so we know which button was pressed
                         """Button coords.
 
                         The first 2, D and R or m(main)row and m(main)col
-                        determine the frame the button is on and the second 2 
-                        bb(baby)row and bb(baby)col determine the coords of the 
-                        button inside the frame.
+                        determine the frame the button is on and the second 2
+                        bb(baby)row and bb(baby)col determine
+                        the coords of the button inside the frame.
                         """
                         button.grid(row=j, column=k, padx=5, pady=5)
                         # Place buttons in a grid, the padding is the lines
@@ -1078,9 +1075,9 @@ def Stictactoe():
                         text=current_player, bg="#FF0000"
                     )
                 # changing the text of the button to the current player
-                if current_player == "X":  # Changing the current player after each turn
+                if current_player == "X":  # Changing the current player
                     current_player = "O"
-                    if game_finished == False:
+                    if game_finished is False:
                         # The bot making a move if its O
                         BTTT.after(
                             100,
@@ -1088,7 +1085,7 @@ def Stictactoe():
                             allowed_frame_coords_x,
                             allowed_frame_coords_y,
                         )
-                        # delaying the bot by 0.1 secconds to make 
+                        # delaying the bot by 0.1 secconds to make
                         # it seem more natural
                 else:
                     current_player = "X"
@@ -1134,9 +1131,9 @@ def Stictactoe():
                         text=current_player, bg="#FF0000"
                     )
                 # changing the text of the button to the current player
-                if current_player == "X":  # Changing the current player after each turn
+                if current_player == "X":  # Changing the current player
                     current_player = "O"
-                    if game_finished == False:
+                    if game_finished is False:
                         # The bot only moves if its O
                         BTTT.after(
                             100,
@@ -1161,20 +1158,19 @@ def Stictactoe():
             nonlocal allowed_frame_coords_y
             if allowed_frame_coords_x != "" and allowed_frame_coords_y != "":
                 while (board[allowed_frame_coords_x][allowed_frame_coords_y]
-                    [bot_coord_X][bot_coord_Y]!= ""):
-                    #KEEP GOING UP AND CHECKING THE WEIRD AHH FORMATTING
+                       [bot_coord_X][bot_coord_Y] != ""):
                     bot_coord_X = random.randint(0, 2)
                     bot_coord_Y = random.randint(0, 2)
                     # Rabdomise the coords until we find an empty button
                 if (board[allowed_frame_coords_x][allowed_frame_coords_y]
-                    [bot_coord_X][bot_coord_Y]== ""):
+                        [bot_coord_X][bot_coord_Y] == ""):
                     # Change the button to current player or player bot
                     board[allowed_frame_coords_x][allowed_frame_coords_y][
                         bot_coord_X][bot_coord_Y] = current_player
                     # Changing the color of the square depedning on the player
                     buttons[allowed_frame_coords_x][allowed_frame_coords_y][
                         bot_coord_X][bot_coord_Y].config(text=current_player,
-                                                      bg="#0000FF")
+                                                         bg="#0000FF")
                     check_winner_sub(allowed_frame_coords_x,
                                      allowed_frame_coords_y)
                     check_winner_main()
@@ -1209,7 +1205,7 @@ def Stictactoe():
                     allowed_frame_coords_y = random.randint(0, 2)
                     # If the frame isn't won then break the loop
                     if (subboard_winner[allowed_frame_coords_x]
-                        [allowed_frame_coords_y] == ""):
+                            [allowed_frame_coords_y] == ""):
                         break
                     # And choose a random button in that frame
                     # Then check random buttons until we find an empty one
@@ -1219,7 +1215,7 @@ def Stictactoe():
                     # If the button is empty then break the loop
                     if (
                         board[allowed_frame_coords_x][allowed_frame_coords_y]
-                        [bot_coord_X][bot_coord_Y]== ""):
+                            [bot_coord_X][bot_coord_Y] == ""):
                         break
                 # Then make the bot make a move in the button
 
@@ -1227,8 +1223,8 @@ def Stictactoe():
                 board[allowed_frame_coords_x][allowed_frame_coords_y][
                     bot_coord_X][bot_coord_Y] = current_player
                 buttons[allowed_frame_coords_x][allowed_frame_coords_y][
-                    bot_coord_X][bot_coord_Y].config(text=current_player, 
-                                                  bg="#0000FF")
+                    bot_coord_X][bot_coord_Y].config(text=current_player,
+                                                     bg="#0000FF")
                 check_winner_sub(allowed_frame_coords_x,
                                  allowed_frame_coords_y)
                 check_winner_main()
@@ -1273,6 +1269,7 @@ def Stictactoe():
             for win in winning:
                 if win[0] == win[1] == win[2] != "" and win[0] != "T":
                     # If all three values in a row are the same and not empty
+                    # nor tied
                     game_finished = True
                     STTT_title.config(text=f"{win[0]} wins!")
                     if win[0] == "O":
@@ -1286,10 +1283,12 @@ def Stictactoe():
                                 for k in j:
                                     # go through and disble all buttons 1 by 1
                                     k.config(state="disabled")
-                                    # Making each button in that frame dissabled
+                                    # Making each button
+                                    # in that frame dissabled
                     return
                 # prevent checking for a tie when winner is already found.
-            if all(subboard_winner[i][r] != "" for i in range(3) for r in range(3)):
+            if all(subboard_winner[i][r] != "" for i in range(3)
+                   for r in range(3)):
                 # If all buttons are filled but no winner
                 game_finished = True
                 STTT_title.config(text="Tie!!")
@@ -1377,11 +1376,11 @@ def Stictactoe():
     bot_button.grid(row=1, column=2, pady=20, padx=20)
 
 
-
 nums = {}
 
 
 def blackjack():
+
     """Game of blackjack.
 
     Displays the BlackJack game when the corresponding button is pressed.
@@ -1394,22 +1393,22 @@ def blackjack():
     blackjack.title("BlackJack")
     blackjack.geometry("1200x800")
     blackjack.resizable(False, False)  # stop the resizing of the window
-    blackjack.config(bg="#0D3B66")  #bg of window
+    blackjack.config(bg="#0D3B66")  # bg of window
 
     def back_to_menu():
 
-            """Going back to the main menu."""
-            root.lift()
-            root.deiconify()
+        """Going back to the main menu."""
+        root.lift()
+        root.deiconify()
 
     back_button = tk.Button(blackjack, text="See\nmenu",
-    command=back_to_menu,
-    font=pixel_font_buttons_small,
-    fg="#0D3B66",
-    bg="#FAF0CA",
-    borderwidth=0,
-    padx=10,
-    pady=0)
+                            command=back_to_menu,
+                            font=pixel_font_buttons_small,
+                            fg="#0D3B66",
+                            bg="#FAF0CA",
+                            borderwidth=0,
+                            padx=10,
+                            pady=0)
     back_button.pack(pady=10, padx=5, anchor="ne", side="right")
 
     # resizing our images
@@ -1517,11 +1516,12 @@ def blackjack():
                 confirmNamewin.geometry("400x800")
                 confirmNamewin.resizable(False, False)
                 confirmNamewin.grid()
-
+                # Add the players score into the dict
                 nums[value] = player_num
+                # Sort the dict by value in descending order
                 sortednums = dict(sorted(nums.items(),
-                                      key=lambda item: item[1],
-                                      reverse=True))
+                                         key=lambda item: item[1],
+                                         reverse=True))
 
                 scrollframe = tk.Frame(confirmNamewin, bg="#FAF0CA")
                 scrollframe.grid(row=0, column=0, sticky="nsew")
@@ -1577,8 +1577,8 @@ def blackjack():
                 line = 1
                 # The row the name and score are on
                 for i, r in sortednums.items():
-                    # putting the score and name in dict into labels so the player
-                    # can see them
+                    # putting the score and name in dict
+                    # into labels so the player can see them
                     scorey = tk.Label(
                         content,
                         text=r,
@@ -1641,86 +1641,80 @@ def blackjack():
         """Player pick up cards."""
         nonlocal player_cards
         if player_cards < 5:
-            try:
-                # making the get card lists
-                # Use these lists to keep track of what cards each person has
+            # making the get card lists
+            # Use these lists to keep track of what cards each person has
 
-                # FOR PLAYER
-                # getting random card using random choice out of deck
-                player_card = random.choice(deck)
-                # remove card from deck
-                deck.remove(player_card)
-                # give card to player
-                player.append(player_card)
-                cardnum.config(text=f"Cards left in deck: {len(deck)}",
-                               fg="#FAF0CA")
-                # appending the value of the card too
-                # stripping the text from the card value and making it only num
-                # Using split and spliting it from the first _ and then int()
-                pvalue = int(player_card.split("_", 1)[0])
-                if pvalue == 14:
-                    if sum(player_score) + 11 > 21:
-                        player_score.append(1)
-                    else:
-                        player_score.append(11)
-                elif pvalue == 11 or pvalue == 12 or pvalue == 13:
-                    player_score.append(10)
+            # FOR PLAYER
+            # getting random card using random choice out of deck
+            player_card = random.choice(deck)
+            # remove card from deck
+            deck.remove(player_card)
+            # give card to player
+            player.append(player_card)
+            cardnum.config(text=f"Cards left in deck: {len(deck)}",
+                           fg="#FAF0CA")
+            # appending the value of the card too
+            # stripping the text from the card value and making it only num
+            # Using split and spliting it from the first _ and then int()
+            pvalue = int(player_card.split("_", 1)[0])
+            if pvalue == 14:
+                if sum(player_score) + 11 > 21:
+                    player_score.append(1)
                 else:
-                    player_score.append(pvalue)
+                    player_score.append(11)
+            elif pvalue == 11 or pvalue == 12 or pvalue == 13:
+                player_score.append(10)
+            else:
+                player_score.append(pvalue)
 
-                # Display cards
-                # seeing which cards should be displayed in which spot
-                if player_cards == 0:
-                    # resize card
-                    player_image_1 = resize_cards(f"Python/{player_card}.png")
-                    # output card
-                    player_card_1.config(image=player_image_1)
-                    # save card
-                    player_card_1.image = player_image_1
-                    player_cards += 1
+            # Display cards
+            # seeing which cards should be displayed in which spot
+            if player_cards == 0:
+                # resize card
+                player_image_1 = resize_cards(f"Python/{player_card}.png")
+                # output card
+                player_card_1.config(image=player_image_1)
+                # save card
+                player_card_1.image = player_image_1
+                player_cards += 1
 
-                elif player_cards == 1:
-                    # resize card
-                    player_image_2 = resize_cards(f"Python/{player_card}.png")
-                    # output card
-                    player_card_2.config(image=player_image_2)
-                    # save card
-                    player_card_2.image = player_image_2
-                    player_cards += 1
+            elif player_cards == 1:
+                # resize card
+                player_image_2 = resize_cards(f"Python/{player_card}.png")
+                # output card
+                player_card_2.config(image=player_image_2)
+                # save card
+                player_card_2.image = player_image_2
+                player_cards += 1
 
-                elif player_cards == 2:
-                    # resize card
-                    player_image_3 = resize_cards(f"Python/{player_card}.png")
-                    # output card
-                    player_card_3.config(image=player_image_3)
-                    # save card
-                    player_card_3.image = player_image_3
-                    player_cards += 1
+            elif player_cards == 2:
+                # resize card
+                player_image_3 = resize_cards(f"Python/{player_card}.png")
+                # output card
+                player_card_3.config(image=player_image_3)
+                # save card
+                player_card_3.image = player_image_3
+                player_cards += 1
 
-                elif player_cards == 3:
-                    # resize card
-                    player_image_4 = resize_cards(f"Python/{player_card}.png")
-                    # output card
-                    player_card_4.config(image=player_image_4)
-                    # save card
-                    player_card_4.image = player_image_4
-                    player_cards += 1
+            elif player_cards == 3:
+                # resize card
+                player_image_4 = resize_cards(f"Python/{player_card}.png")
+                # output card
+                player_card_4.config(image=player_image_4)
+                # save card
+                player_card_4.image = player_image_4
+                player_cards += 1
 
-                elif player_cards == 4:
-                    # resize card
-                    player_image_5 = resize_cards(f"Python/{player_card}.png")
-                    # output card
-                    player_card_5.config(image=player_image_5)
-                    # save card
-                    player_card_5.image = player_image_5
-                    player_cards += 1
-            except:
-                cardnum.config(
-                    fg="#FF0000",
-                    text="There are no more" " cards in the deck,"
-                      "please shuffle again",
-                )
-            blackjack_score("player")
+            elif player_cards == 4:
+                # resize card
+                player_image_5 = resize_cards(f"Python/{player_card}.png")
+                # output card
+                player_card_5.config(image=player_image_5)
+                # save card
+                player_card_5.image = player_image_5
+                player_cards += 1
+        blackjack_score("player")
+        # CHECK THIS
 
     # DEALER GET CARD
     def dealer_hit():
@@ -1728,85 +1722,80 @@ def blackjack():
         nonlocal dealer_cards
         # if dealer has less than 5 cards
         if dealer_cards < 5:
-            try:
-                # FRO DEALER
-                # getting random card using random choice out of deck
-                dealer_card = random.choice(deck)
-                # remove card from deck
-                deck.remove(dealer_card)
-                # give card to dealer
-                dealer.append(dealer_card)
-                # appending the value of the card too
-                # stripping the text from the 
-                # card value and making it only num
-                # Using split and spliting it from the first _ and then int()
-                dvalue = int(dealer_card.split("_", 1)[0])
-                if dvalue == 14:
-                    if sum(dealer_score) + 11 > 21:
-                        dealer_score.append(1)
-                    else:
-                        dealer_score.append(11)
-                elif dvalue == 11 or dvalue == 12 or dvalue == 13:
-                    dealer_score.append(10)
+            # FRO DEALER
+            # getting random card using random choice out of deck
+            dealer_card = random.choice(deck)
+            # remove card from deck
+            deck.remove(dealer_card)
+            # give card to dealer
+            dealer.append(dealer_card)
+            # appending the value of the card too
+            # stripping the text from the
+            # card value and making it only num
+            # Using split and spliting it from the first _ and then int()
+            dvalue = int(dealer_card.split("_", 1)[0])
+            if dvalue == 14:
+                if sum(dealer_score) + 11 > 21:
+                    # If adding 11 will bust add one
+                    dealer_score.append(1)
                 else:
-                    dealer_score.append(dvalue)
+                    dealer_score.append(11)
+            elif dvalue == 11 or dvalue == 12 or dvalue == 13:
+                dealer_score.append(10)
+            else:
+                dealer_score.append(dvalue)
 
-                cardnum.config(text=f"Cards left in deck: {len(deck)}",
-                               fg="#FAF0CA")
+            cardnum.config(text=f"Cards left in deck: {len(deck)}",
+                           fg="#FAF0CA")
 
-                # Display cards
-                # seeing which cards should be displayed in which spot
-                if dealer_cards == 0:
-                    # resize card
-                    dealer_image_1 = resize_cards(f"Python/{dealer_card}.png")
-                    # dealer image backside
-                    dealer_back = resize_cards(f"Python/back_card.png")
-                    # output backside
-                    dealer_card_1.config(image=dealer_back)
-                    # save card
-                    dealer_card_1.image = dealer_back
-                    dealer_cards += 1
+            # Display cards
+            # seeing which cards should be displayed in which spot
+            if dealer_cards == 0:
+                # resize card
+                dealer_image_1 = resize_cards(f"Python/{dealer_card}.png")
+                # dealer image backside
+                dealer_back = resize_cards(f"Python/back_card.png")
+                # output backside
+                dealer_card_1.config(image=dealer_back)
+                # save card
+                dealer_card_1.image = dealer_back
+                dealer_cards += 1
 
-                elif dealer_cards == 1:
-                    # resize card
-                    dealer_image_2 = resize_cards(f"Python/{dealer_card}.png")
-                    # output card
-                    dealer_card_2.config(image=dealer_image_2)
-                    # save card
-                    dealer_card_2.image = dealer_image_2
-                    dealer_cards += 1
+            elif dealer_cards == 1:
+                # resize card
+                dealer_image_2 = resize_cards(f"Python/{dealer_card}.png")
+                # output card
+                dealer_card_2.config(image=dealer_image_2)
+                # save card
+                dealer_card_2.image = dealer_image_2
+                dealer_cards += 1
 
-                elif dealer_cards == 2:
-                    # resize card
-                    dealer_image_3 = resize_cards(f"Python/{dealer_card}.png")
-                    # output card
-                    dealer_card_3.config(image=dealer_image_3)
-                    # save card
-                    dealer_card_3.image = dealer_image_3
-                    dealer_cards += 1
+            elif dealer_cards == 2:
+                # resize card
+                dealer_image_3 = resize_cards(f"Python/{dealer_card}.png")
+                # output card
+                dealer_card_3.config(image=dealer_image_3)
+                # save card
+                dealer_card_3.image = dealer_image_3
+                dealer_cards += 1
 
-                elif dealer_cards == 3:
-                    # resize card
-                    dealer_image_4 = resize_cards(f"Python/{dealer_card}.png")
-                    # output card
-                    dealer_card_4.config(image=dealer_image_4)
-                    # save card
-                    dealer_card_4.image = dealer_image_4
-                    dealer_cards += 1
+            elif dealer_cards == 3:
+                # resize card
+                dealer_image_4 = resize_cards(f"Python/{dealer_card}.png")
+                # output card
+                dealer_card_4.config(image=dealer_image_4)
+                # save card
+                dealer_card_4.image = dealer_image_4
+                dealer_cards += 1
 
-                elif dealer_cards == 4:
-                    # resize card
-                    dealer_image_5 = resize_cards(f"Python/{dealer_card}.png")
-                    # output card
-                    dealer_card_5.config(image=dealer_image_5)
-                    # save card
-                    dealer_card_5.image = dealer_image_5
-                    dealer_cards += 1
-            except:
-                cardnum.config(
-                    fg="#FF0000",
-                    text="There are no more cards" 
-                    " in the deck, please shuffle again")
+            elif dealer_cards == 4:
+                # resize card
+                dealer_image_5 = resize_cards(f"Python/{dealer_card}.png")
+                # output card
+                dealer_card_5.config(image=dealer_image_5)
+                # save card
+                dealer_card_5.image = dealer_image_5
+                dealer_cards += 1
         if len(dealer_score) <= 2:
             # check for blackjack
             blackjack_score("dealer")
@@ -1959,7 +1948,7 @@ def blackjack():
     # checking win after dealer moves
     def stand_win():
         """Occurs when the player presses stand.
-        
+
         It checks who wins after that.
         """
         nonlocal player_num
@@ -2020,22 +2009,22 @@ def blackjack():
     # check for blackjack
     def blackjack_score(player):
         """Adds the score of the card to the players total.
-        
+
         If the player surpasses 21 they lose
         """
         nonlocal player_num
         if sum(dealer_score) == 21 and sum(player_score) == 21:
-                # If both the players have blackjack
-                # let player win bc im nice:)
-                jack_title.config(text="BLACK JACK YOU WIN")
-                player_num += 1
-                hit_button.config(state="disabled")
-                stand_button.config(state="disabled")
-                shuffle_button.config(bg="#FAF0CA", state="normal")
-                dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
-                # save card
-                dealer_card_1.config(image=dealer_new_card)
-                dealer_card_1.image = dealer_new_card
+            # If both the players have blackjack
+            # let player win bc im nice:)
+            jack_title.config(text="BLACK JACK YOU WIN")
+            player_num += 1
+            hit_button.config(state="disabled")
+            stand_button.config(state="disabled")
+            shuffle_button.config(bg="#FAF0CA", state="normal")
+            dealer_new_card = resize_cards(f"Python/{dealer[0]}.png")
+            # save card
+            dealer_card_1.config(image=dealer_new_card)
+            dealer_card_1.image = dealer_new_card
         elif player == "dealer":
             # if cards were just chuffled
             # DEALER WIN
@@ -2052,8 +2041,7 @@ def blackjack():
                     gamefin()
         elif player == "player":
             # if cards were just shuffled
-            # PLAYER WIN
-                    # DEALER WIN
+            # DEALER WIN
             if sum(player_score) > 21:
                 jack_title.config(text="ITS A BUST, YOU LOSE")
                 hit_button.config(state="disabled")
@@ -2106,9 +2094,9 @@ def help():
         nonlocal changing_label
         changing_label.config(
             text="How to play Hangman:\n"
-            "Enter the letters you think are in the word inside the " 
+            "Enter the letters you think are in the word inside the "
             "text box.\n"
-            "You can either enter one letter or a whole word \n" \
+            "You can either enter one letter or a whole word \n"
             "BUT the letters"
             "in the word are not counted as guessed\n"
             "so consider  very carefully.\n"
@@ -2134,25 +2122,25 @@ def help():
         nonlocal changing_label
         changing_label.config(
             text="Super Tic Tac Toe is like regular Tic Tac Toe,"
-            "\n but with 81 squares instead of 9 squares.\n" \
-            "The board is split into 9 subboards, with " \
-                "9 squares inide it, \n" \
-            "which can be played like a regular Tic Tac Toe board. \n" \
-            "But, the button you play in each subboard will correspond to\n" \
-            " the next subboard your opponent will then play in \n" \
-            "so make sure you choose wisely about where you move next! \n" \
-            "But, if you play in a button that corresponds to a \n" \
-            "already won or tied subboard your opponent can go anywhere, \n" \
-            "but the opposite can also happen. \n" \
-            "The subboard you will be allowed to play in will be"\
-                  " highlighted in a dark blue colour \n" \
-            " once the whole board turns dark blue you"\
-                  "can go anywhere you want. \n" \
+            "\n but with 81 squares instead of 9 squares.\n"
+            "The board is split into 9 subboards, with "
+            "9 squares inide it, \n"
+            "which can be played like a regular Tic Tac Toe board. \n"
+            "But, the button you play in each subboard will correspond to\n"
+            " the next subboard your opponent will then play in \n"
+            "so make sure you choose wisely about where you move next! \n"
+            "But, if you play in a button that corresponds to a \n"
+            "already won or tied subboard your opponent can go anywhere, \n"
+            "but the opposite can also happen. \n"
+            "The subboard you will be allowed to play in will be"
+            " highlighted in a dark blue colour \n"
+            " once the whole board turns dark blue you"
+            "can go anywhere you want. \n"
             "Once you win a subboard it will change into your"
-              "corresponding colour, \n" \
-            "blue for “O”s and red of “X”s. \n" \
-            "You will win the entire game when you have won three" 
-            "subboards in a row.\n" \
+            "corresponding colour, \n"
+            "blue for “O”s and red of “X”s. \n"
+            "You will win the entire game when you have won three"
+            "subboards in a row.\n"
             "Feel free to play with a friend or the bot!!",
             font=pixel_font_buttons_small,
             fg="#0D3B66",
@@ -2164,29 +2152,29 @@ def help():
         nonlocal changing_label
         changing_label.config(
             text="Blackjack is a card game that uses a poker card deck, "
-              "excluding jokers.\n" \
-            "Each card has its own values with number cards having their " 
-            "value be their number, \n" \
-            "Ace being 11 or 1 and face cards having a value of 10.\n" \
+            "excluding jokers.\n"
+            "Each card has its own values with number cards having their "
+            "value be their number, \n"
+            "Ace being 11 or 1 and face cards having a value of 10.\n"
             "You will have a total score which is all the values of your "
-              "cards added together.\n" \
+            "cards added together.\n"
             "Your goal is to get as close to 21 as possible "
-              "without going over. \n" \
+            "without going over. \n"
             "You are trying to outscore the dealer who has the same "
-              "goal as you.\n" \
-            "You start with 2 cards and can pick up to 5 cards.\n" \
+            "goal as you.\n"
+            "You start with 2 cards and can pick up to 5 cards.\n"
             "If you reach 5 cards without going over 21 or get a score of "
-              "exactly 21 cards \n"
+            "exactly 21 cards \n"
             "or beat the dealer without going over 21 or the dealer goes "
-              "over 21, you win.\n" \
-            "Once you are finished picking up cards you can press\n" \
-            " the stand button and allow the dealer to pick up cards.\n" \
+            "over 21, you win.\n"
+            "Once you are finished picking up cards you can press\n"
+            " the stand button and allow the dealer to pick up cards.\n"
             "However if you go over a score of 21 or have a lower score "
-              "than the dealer, \n" \
-            "You Lose and have to play again.\n" \
-            "Each round you win consecutively will give you a point, \n" \
+            "than the dealer, \n"
+            "You Lose and have to play again.\n"
+            "Each round you win consecutively will give you a point, \n"
             "your goal is get the most points and therefore the highest "
-              "place on the leaderboard.",
+            "place on the leaderboard.",
             font=pixel_font_buttons_small,
             fg="#0D3B66",
             bg="#FAF0CA",
