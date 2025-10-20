@@ -1478,7 +1478,7 @@ def blackjack():
 
     def openLB():
         sb_window = tk.Toplevel(blackjack)
-        sb_window.title("Hangman scores")
+        sb_window.title("Blackjack scores")
         sb_window.geometry("500x500")
         sb_window.resizable(False, False)
         # stop the resizing of the window
@@ -1523,6 +1523,7 @@ def blackjack():
                                          key=lambda item: item[1],
                                          reverse=True))
 
+                # frame holding the scrollbar and canvas
                 scrollframe = tk.Frame(confirmNamewin, bg="#FAF0CA")
                 scrollframe.grid(row=0, column=0, sticky="nsew")
 
@@ -1534,8 +1535,10 @@ def blackjack():
                 scrollbar.grid(row=0, column=1, sticky="ns")
                 canvasScroll.configure(yscrollcommand=scrollbar.set)
 
+                # A frame which stores all the scrollable content
                 content = tk.Frame(canvasScroll, bg="#FAF0CA")
                 content.grid(row=0, column=0, sticky="nsew")
+                # expanding the content to fit the window
                 content.rowconfigure(0, weight=1)
                 content.columnconfigure(0, weight=1)
 
