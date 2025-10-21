@@ -570,7 +570,7 @@ def Stictactoe():
         # I am using a tutorial by Alina Chudnova but
         # I modified it to make it super
         # I used codingspots ultimate tictactoe video
-        # for the nested list board
+        # for ideas
         heading_frame = tk.Frame(FTTT, bg="#FAF0CA")
         heading_frame.grid(row=0, column=0, columnspan=5)
 
@@ -827,8 +827,6 @@ def Stictactoe():
         # These act as place holders as they are lists with sub lists inside
         # These allow us to determine coords of our buttons and stuff
         for d in range(3):  # creating the first row
-            board_button_row = []
-            # Stores the row of buttons created this iteration
             for r in range(3):  # creating the 3x3 grid structure
                 # frame like divclass
                 subboard_frame = tk.Frame(
@@ -870,7 +868,7 @@ def Stictactoe():
 
                         The first 2, D and R or m(main)row and m(main)col
                         determine the frame the button is on and the second 2
-                        subrow and subcol determine the coords of
+                        (J and K)subrow and subcol determine the coords of
                         the button inside the frame.
                         """
                         button.grid(row=j, column=k, padx=5, pady=5)
@@ -881,8 +879,9 @@ def Stictactoe():
                     button_subboard.append(buttons_row)
                     # Adding the row to a 3x3 grid
                 buttons[d][r] = button_subboard
+                # Adding the grid into the buttons list.
                 # changing the ""
-                # from the nested list into our button 3x3 grid
+                # from the list into our button 3x3 grid
 
     def Stictactoe_bot():
         """A bot for Super Tic Tac Toe.
@@ -902,8 +901,6 @@ def Stictactoe():
         current_player = "X"  # X is the current player
         # I'm using a tutorial by Alina Chudnova
         # but I modified it to make it super
-        # I used codingspots ultimate tictactoe video
-        # for some ideas
 
         # Giving our board a value
         board = [
@@ -954,8 +951,6 @@ def Stictactoe():
         # These act as place holders as they are lists with sub lists inside
         # These allow us to determine coords of our buttons and stuff
         for d in range(3):  # creating the first row
-            board_button_row = []
-            # Stores the row of buttons created this iteration
             for r in range(3):  # creating the 3x3 grid structure
                 # frame like divclass
                 subboard_frame = tk.Frame(
@@ -1380,13 +1375,11 @@ nums = {}
 
 
 def blackjack():
-
     """Game of blackjack.
 
     Displays the BlackJack game when the corresponding button is pressed.
 
     """
-
     player_num = 0
     # I am using a tutorial by codemy.com for this blackjack game
     blackjack = tk.Toplevel(root)
@@ -1396,8 +1389,8 @@ def blackjack():
     blackjack.config(bg="#0D3B66")  # bg of window
 
     def back_to_menu():
-
         """Going back to the main menu."""
+
         root.lift()
         root.deiconify()
 
@@ -1877,7 +1870,6 @@ def blackjack():
 
         basically restarting the game.
         """
-
         nonlocal player_cards
         nonlocal dealer_cards
         # shuffle the cards
