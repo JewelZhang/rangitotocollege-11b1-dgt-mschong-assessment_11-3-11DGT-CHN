@@ -103,7 +103,7 @@ def hangman():
     hangman.configure(bg="#FAF0CA")  # The background color of the window
 
     def back_to_menu():
-        """Going back to the main menu."""
+        """Go back to the main menu."""
         root.lift()
         root.deiconify()
 
@@ -475,7 +475,6 @@ def hangman():
 
         this function is called on each time the player loses a life.
         """
-
         if lives == 11:  # rim
 
             canvas.create_line(150, 100, 240, 100)
@@ -1131,7 +1130,7 @@ def Stictactoe():
 
         def TTT_bot_move(bot_allowed_frame_coords_x,
                          bot_allowed_frame_coords_y):
-            """The bot makes a move.
+            """Bot makes a move.
 
             The bot will randomly choose coordinates to move in if the
             choosen coordinates are free it will make a move
@@ -1294,7 +1293,7 @@ def Stictactoe():
 
         # Iterating through each square
         def check_winner_sub(mainrow, maincol):
-            """Checking if there is a winner for sub.
+            """Check if there is a winner for sub.
 
             These coords are used for the subboard_check var
             """
@@ -1389,7 +1388,6 @@ def blackjack():
 
     def back_to_menu():
         """Go back to the main menu."""
-
         root.lift()
         root.deiconify()
 
