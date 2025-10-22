@@ -103,6 +103,7 @@ def hangman():
     hangman.configure(bg="#FAF0CA")  # The background color of the window
 
     def back_to_menu():
+        """Going back to the main menu."""
         root.lift()
         root.deiconify()
 
@@ -267,14 +268,12 @@ def hangman():
                               "score to the leaderboard?", fg="#0D3B66")
             checkbutton.config(command=scoreboard, text="Open Leaderboard")
 
-    # CODE WOF CHECK HERE
-
     def nextword(event=None):
         """Go to the next word.
+
         This function is called on when the player wants to go to the
         next word after they have guessed the current one
         """
-
         nonlocal word
         nonlocal guessed
         nonlocal difficulty
@@ -324,7 +323,7 @@ def hangman():
     checkbutton.pack(pady=5)
 
     def scoreboard():
-        """Displaying the scoreboard"""
+        """Display the scoreboard."""
         scoreboard_window = tk.Toplevel(hangman)
         scoreboard_window.title("Hangman scores")
         scoreboard_window.geometry("500x800")
@@ -354,7 +353,7 @@ def hangman():
         name_warning.pack(pady=5)
 
         def get_name():
-            """Get the name of the player"""
+            """Get the name of the player."""
             # I used a tutorial by Tutorialspoint for the scroll bar
             checkbutton.config(state="disabled")
             value = nameEnter.get()
@@ -461,16 +460,10 @@ def hangman():
 
     """To draw the man.
 
-
-
     we will draw the man using canvas with lines and coordinates.
-
     There will be 6 strokes each corresponding to a life the player has.
-
     When the player guesses wrong a stroke will be added.
-
     """
-
     canvas = tk.Canvas(
         hangman, width=400, height=350, bg="#FAF0CA", highlightthickness=0
     )
@@ -479,7 +472,8 @@ def hangman():
 
     def drawman(lives):
         """Drawing the hangman.
-        this function is called on each time the player loses a life
+
+        this function is called on each time the player loses a life.
         """
 
         if lives == 11:  # rim
@@ -532,12 +526,11 @@ def hangman():
 
 
 def Stictactoe():
-    """The game Super Tic Tac Toe.
+    """Super Tic Tac Toe game.
 
     When a player presses the button it will run this function and open
-    up amenu giving you a choice of either playing with a friend or a bot
+    up a menu giving you a choice of either playing with a friend or a bot
     """
-
     TTT = tk.Toplevel(root)
     TTT.title("Choose your gamemode")
     TTT.title("Tic Tac Toes")
@@ -575,8 +568,7 @@ def Stictactoe():
         heading_frame.grid(row=0, column=0, columnspan=5)
 
         def back_to_menu():
-
-            """Going back to the main menu."""
+            """Go back to the main menu."""
             root.lift()
             root.deiconify()
 
@@ -726,7 +718,7 @@ def Stictactoe():
                     current_player = "X"
 
         def check_winner_main():
-            """ Checking if there is a winner on the main board."""
+            """Check if there is a winner on the main board."""
             nonlocal board
             nonlocal current_player
             nonlocal subboard_winner
@@ -774,7 +766,8 @@ def Stictactoe():
             # Iterating through each square
 
         def check_winner_sub(mainrow, maincol):
-            """Checking the winner in each subboard.
+            """Check the winner in each subboard.
+
             Checking if there is a winner for sub
             These coords are used for the subboard_check var
             """
@@ -883,7 +876,7 @@ def Stictactoe():
                 # from the list into our button 3x3 grid
 
     def Stictactoe_bot():
-        """A bot for Super Tic Tac Toe.
+        """Bot for Super Tic Tac Toe.
 
         This is a bot that will play Super Tic Tac Toe with you however it
         is a completely random bot that will loop through coordinates until
@@ -918,8 +911,7 @@ def Stictactoe():
         heading_frame.grid(row=0, column=0, columnspan=5)
 
         def back_to_menu():
-
-            """Going back to the main menu."""
+            """Go back to the main menu."""
             root.lift()
             root.deiconify()
 
@@ -958,12 +950,10 @@ def Stictactoe():
                 )
                 subboard_frame.grid(row=d + 1, column=r, pady=5, padx=5)
                 subboards[d][r] = subboard_frame
-                """
-                Creating the frame the buttons are gonna go inside
-                And then putting the frame into a grid structure
-                then add that to a nested list that stores it
-                and lets us edit exact frames through coords
-                """
+                # Creating the frame the buttons are gonna go inside
+                # And then putting the frame into a grid structure
+                # then add that to a nested list that stores it
+                # and lets us edit exact frames through coords
                 button_subboard = []
                 # Where we append the button rows for 3x3 grid
                 # buttons inside the subboard
@@ -1021,7 +1011,7 @@ def Stictactoe():
             )
 
         def make_move(mainrow, maincol, subrow, subcol):
-            # the code so the player can click a button to make a move
+            """Code so the player can click a button to make a move."""
             nonlocal current_player
             nonlocal board
             nonlocal buttons
@@ -1141,6 +1131,13 @@ def Stictactoe():
 
         def TTT_bot_move(bot_allowed_frame_coords_x,
                          bot_allowed_frame_coords_y):
+            """The bot makes a move.
+
+            The bot will randomly choose coordinates to move in if the
+            choosen coordinates are free it will make a move
+            if they aren't the bot will randomise again until it finds
+            a free button.
+            """
             nonlocal board
             nonlocal current_player
             bot_coord_X = random.randint(0, 2)
@@ -1243,7 +1240,8 @@ def Stictactoe():
                                 subboards[i][r].config(bg="#0D3B66")
                 # change allowed coords and color
 
-        def check_winner_main():  # Checking if there is a winner
+        def check_winner_main():
+            """Check if there is a winner in mainboard."""
             nonlocal board
             nonlocal current_player
             nonlocal subboard_winner
@@ -1296,8 +1294,10 @@ def Stictactoe():
 
         # Iterating through each square
         def check_winner_sub(mainrow, maincol):
-            # Checking if there is a winner for sub
-            # These coords are used for the subboard_check var
+            """Checking if there is a winner for sub.
+
+            These coords are used for the subboard_check var
+            """
             nonlocal current_player
             nonlocal board
             nonlocal subboard_winner
@@ -1388,7 +1388,7 @@ def blackjack():
     blackjack.config(bg="#0D3B66")  # bg of window
 
     def back_to_menu():
-        """Going back to the main menu."""
+        """Go back to the main menu."""
 
         root.lift()
         root.deiconify()
@@ -1403,8 +1403,8 @@ def blackjack():
                             pady=0)
     back_button.pack(pady=10, padx=5, anchor="ne", side="right")
 
-    # resizing our images
     def resize_cards(card):
+        """Resize the images."""
         card_image = Image.open(card).resize((135, 190))
         cardimage_resized = ImageTk.PhotoImage(card_image)
         return cardimage_resized
@@ -1469,6 +1469,7 @@ def blackjack():
     Pframe.pack(padx=20)
 
     def openLB():
+        """Open the area to enter your score and name."""
         sb_window = tk.Toplevel(blackjack)
         sb_window.title("Blackjack scores")
         sb_window.geometry("500x500")
@@ -1497,6 +1498,7 @@ def blackjack():
         name_warning.pack(pady=5)
 
         def get_name():
+            """Open the leaderboard."""
             global nums
             nonlocal player_num
             # I used a tutorial by Tutorialspoint for the scroll bar
@@ -1838,7 +1840,8 @@ def blackjack():
     stand_button.pack(pady=10, padx=10, side="left")
 
     # putting cards into frames
-    # five cards if player goes over they win
+    # five cards if player gets 5 w/o busting then they win
+    # only 5 as the player and dealer cannot have more than 5
     dealer_card_1 = tk.Label(Dframe, text="", bg="#FAF0CA")
     player_card_1 = tk.Label(Pframe, text="", bg="#FAF0CA")
     dealer_card_1.grid(row=0, column=0, pady=20)
@@ -1877,7 +1880,7 @@ def blackjack():
         # And resetting the cards each person has
         dealer.clear()
         player.clear()
-
+        # resetting their scores
         player_score.clear()
         dealer_score.clear()
 
@@ -2002,7 +2005,7 @@ def blackjack():
 
     # check for blackjack
     def blackjack_score(player):
-        """Adds the score of the card to the players total.
+        """Add the score of the card to the players total.
 
         If the player surpasses 21 they lose
         """
@@ -2077,7 +2080,7 @@ def blackjack():
 
 
 def help():
-    """Opens the help menu."""
+    """Open the help menu."""
     help = tk.Toplevel(root)
     help.title("Help")
     help.geometry("700x1000")
@@ -2085,6 +2088,7 @@ def help():
     help.configure(bg="#FAF0CA")  # The background color of the window
 
     def hangman_help():
+        """Open help for hangman."""
         nonlocal changing_label
         changing_label.config(
             text="How to play Hangman:\n"
@@ -2113,6 +2117,7 @@ def help():
         )
 
     def TTT_help():
+        """Open help for Super Tic Tac Toe."""
         nonlocal changing_label
         changing_label.config(
             text="Super Tic Tac Toe is like regular Tic Tac Toe,"
@@ -2143,6 +2148,7 @@ def help():
         )
 
     def blackjack_help():
+        """Open help for Blackjack."""
         nonlocal changing_label
         changing_label.config(
             text="Blackjack is a card game that uses a poker card deck, "
@@ -2176,6 +2182,7 @@ def help():
         )
 
     def attributiontext():
+        """Open attribution."""
         nonlocal changing_label
         changing_label.config(
             text="Menu Images:\n"
