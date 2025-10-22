@@ -835,12 +835,12 @@ def Stictactoe():
                 )
                 subboard_frame.grid(row=d + 1, column=r, pady=5, padx=5)
                 subboards[d][r] = subboard_frame
-                """
-                Creating the frame the buttons are gonna go inside
-                And then putting the frame into a grid structure
-                then add that to a nested list that stores it
-                and lets us edit exact frames through coords
-                """
+
+                # Creating the frame the buttons are gonna go inside
+                # And then putting the frame into a grid structure
+                # then add that to a nested list that stores it
+                # and lets us edit exact frames through coords
+
                 button_subboard = []
                 # Where we append the button rows for 3x3 grid
                 # buttons inside the subboard
@@ -864,13 +864,12 @@ def Stictactoe():
                         # when we make a move we take into consideration
                         # the subboard and button pressed
                         # this is so we know which button was pressed
-                        """Button coords.
 
-                        The first 2, D and R or m(main)row and m(main)col
-                        determine the frame the button is on and the second 2
-                        (J and K)subrow and subcol determine the coords of
-                        the button inside the frame.
-                        """
+                        # The first 2, D and R or m(main)row and m(main)col
+                        # determine the frame the button is on and the second
+                        # 2(J and K)subrow and subcol determine the coords of
+                        #  button inside the frame.
+
                         button.grid(row=j, column=k, padx=5, pady=5)
                         # Place the buttons in a grid, the padding is
                         # the lines
@@ -987,13 +986,13 @@ def Stictactoe():
                         # when we make a move we take into consideration the
                         # subboard and button pressed
                         # this is so we know which button was pressed
-                        """Button coords.
 
-                        The first 2, D and R or m(main)row and m(main)col
-                        determine the frame the button is on and the second 2
-                        bb(baby)row and bb(baby)col determine
-                        the coords of the button inside the frame.
-                        """
+                        # The first 2, D and R or m(main)row and m(main)col
+                        # determine the frame the button is on and
+                        # the second 2(J and K)
+                        # subrow and subcol determine
+                        # the coords of the button inside the frame.
+
                         button.grid(row=j, column=k, padx=5, pady=5)
                         # Place buttons in a grid, the padding is the lines
                         buttons_row.append(button)
