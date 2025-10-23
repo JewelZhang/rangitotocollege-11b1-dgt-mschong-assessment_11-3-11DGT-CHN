@@ -215,7 +215,7 @@ def hangman():
                 )
                 # Changing the text to show they won
                 enter.config(state="disabled")
-                #disabling the enter box so they cant keep guessing
+                # disabling the enter box so they cant keep guessing
                 # adding the score depending on what word they guess
                 if difficulty == "easy":
                     score += 1
@@ -2085,6 +2085,7 @@ def help():
     help.resizable(False, False)  # stop the resizing of the window
     help.configure(bg="#FAF0CA")  # The background color of the window
     # shows when respective help button is pressed
+
     def hangman_help():
         """Open help for hangman."""
         nonlocal changing_label
