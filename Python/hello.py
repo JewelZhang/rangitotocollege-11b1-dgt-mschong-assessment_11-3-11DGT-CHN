@@ -1493,7 +1493,7 @@ def blackjack():
         name_enter.pack()
         name_warning = tk.Label(
             sb_window,
-            text="Please enter an orginal name under 7 letters",
+            text="Please enter an original name under 7 letters",
             fg="#0D3B66",
             bg="#FAF0CA",
             font=pixel_font_buttons_hangman,
