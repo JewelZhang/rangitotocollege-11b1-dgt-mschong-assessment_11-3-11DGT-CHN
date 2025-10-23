@@ -215,7 +215,8 @@ def hangman():
                 )
                 # Changing the text to show they won
                 enter.config(state="disabled")
-
+                #disabling the enter box so they cant keep guessing
+                # adding the score depending on what word they guess
                 if difficulty == "easy":
                     score += 1
                 elif difficulty == "medium":
@@ -423,6 +424,7 @@ def hangman():
                 # The row the name and score are on
 
                 for i, r in sortedscores.items():
+                    # the players score
                     scorey = tk.Label(
                             content,
                             text=r,
@@ -430,6 +432,7 @@ def hangman():
                             fg="#0D3B66",
                             font=pixel_font_labels
                             )
+                    # the players name
                     namey = tk.Label(
                         content,
                         text=i,
@@ -458,12 +461,6 @@ def hangman():
         )
         confirmName.pack(pady=10)
 
-    """To draw the man.
-
-    we will draw the man using canvas with lines and coordinates.
-    There will be 6 strokes each corresponding to a life the player has.
-    When the player guesses wrong a stroke will be added.
-    """
     canvas = tk.Canvas(
         hangman, width=400, height=350, bg="#FAF0CA", highlightthickness=0
     )
@@ -471,8 +468,11 @@ def hangman():
     canvas.pack(pady=2)
 
     def drawman(lives):
-        """Drawing the hangman.
+        """To draw the man.
 
+        we will draw the man using canvas with lines and coordinates.
+        There will be 6 strokes each corresponding to a life the player has.
+        When the player guesses wrong a stroke will be added.
         this function is called on each time the player loses a life.
         """
         if lives == 11:  # rim
@@ -2084,7 +2084,7 @@ def help():
     help.geometry("700x1000")
     help.resizable(False, False)  # stop the resizing of the window
     help.configure(bg="#FAF0CA")  # The background color of the window
-
+    # shows when respective help button is pressed
     def hangman_help():
         """Open help for hangman."""
         nonlocal changing_label
@@ -2195,7 +2195,7 @@ def help():
             bg="#FAF0CA",
             justify="center",
         )
-
+    # buttons connected to the help functions
     help_label = tk.Label(
         help,
         text="What do you need help with?",
@@ -2259,7 +2259,7 @@ def help():
 
 
 root.title("Main Menu")
-
+# button images!
 hangman_image = Image.open("Python/hangmanpic.png").resize((275, 275))
 hangman_image = ImageTk.PhotoImage(hangman_image)
 
@@ -2268,7 +2268,7 @@ TTT_image = ImageTk.PhotoImage(TTT_image)
 
 blackjackbutton_image = Image.open("Python/blacjack.jpg").resize((275, 275))
 blackjackbutton_image = ImageTk.PhotoImage(blackjackbutton_image)
-
+# menu buttons, connected to function that opens a game
 help_button = tk.Button(
     root,
     text="?",
