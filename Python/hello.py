@@ -50,6 +50,7 @@ def hangman():
     """
     global scores
     # Using a hangman tut from Data Science with Onur
+    # Create a Cool Hangman Game in Python Using TKInter – Step-by-Step Guide!
     words = {
         "easy": [
             "cat",
@@ -563,6 +564,8 @@ def Stictactoe():
         # I modified it to make it super
         # I used codingspots ultimate tictactoe video
         # for ideas
+        # name of the video:
+        # Build a Tic-Tac-Toe Game with Python & Tkinter | Tutorial
         heading_frame = tk.Frame(FTTT, bg="#FAF0CA")
         heading_frame.grid(row=0, column=0, columnspan=5)
 
@@ -1380,6 +1383,8 @@ def blackjack():
     """
     player_num = 0
     # I am using a tutorial by codemy.com for this blackjack game
+    # the tutorial is called:
+    # Build A Blackjack Card Game - Python Tkinter GUI Tutorial 208
     blackjack = tk.Toplevel(root)
     blackjack.title("BlackJack")
     blackjack.geometry("1200x800")
