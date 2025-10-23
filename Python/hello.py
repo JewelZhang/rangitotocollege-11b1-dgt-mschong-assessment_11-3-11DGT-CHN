@@ -2189,7 +2189,7 @@ def help():
             "from John Elders github account\n"
             "The back of the card image:\n"
             "is from Pixabay, by TJfree"
-            "published on February 25, 2022",
+            "published on February 25, 2022 under the Pixabay license\n",
             font=pixel_font_buttons_small,
             fg="#0D3B66",
             bg="#FAF0CA",
